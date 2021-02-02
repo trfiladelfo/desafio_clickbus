@@ -1,3 +1,4 @@
 <resources>
+    <string name="google_web_client_id" translatable="false">783693801212-2b2o8ii1684e7o0jjeuaksf8iqplb9oj.apps.googleusercontent.com</string>
     <string name="app_name">The Movies</string>
 </resources>

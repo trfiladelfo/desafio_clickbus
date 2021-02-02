@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "783693801212",
+    "project_id": "tm-clickbus",
+    "storage_bucket": "tm-clickbus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783693801212:android:7e2e1cb74cfd0a4b3a9979",
+        "android_client_info": {
+          "package_name": "br.com.thiagofiladelfo.clickbus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783693801212-2b2o8ii1684e7o0jjeuaksf8iqplb9oj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXuimeexzvDLILhJw5LKxE5uj82p8s8OA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783693801212-2b2o8ii1684e7o0jjeuaksf8iqplb9oj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
