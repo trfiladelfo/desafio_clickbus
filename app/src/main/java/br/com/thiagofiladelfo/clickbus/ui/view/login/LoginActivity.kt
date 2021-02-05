@@ -10,7 +10,7 @@ import br.com.thiagofiladelfo.clickbus.data.repository.LoginRepository
 import br.com.thiagofiladelfo.clickbus.databinding.LoginActivityBinding
 import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseActivity
-import br.com.thiagofiladelfo.clickbus.ui.view.home.HomeActivity
+import br.com.thiagofiladelfo.clickbus.ui.view.main.MainActivity
 
 class LoginActivity : BaseActivity() {
 
@@ -50,7 +50,7 @@ class LoginActivity : BaseActivity() {
             when (it.status) {
                 Emitter.Status.START -> {
                 }
-                Emitter.Status.COMPLETE -> moveHomeAction(it.data)
+                Emitter.Status.COMPLETE -> moveHomeAction()
                 Emitter.Status.ERROR -> AlertDialog.Builder(this).let { builder ->
                     builder.setMessage(it.error!!.message)
                     builder.setNegativeButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
@@ -61,7 +61,7 @@ class LoginActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        viewModel.signedIn(this, requestCode, resultCode, data)
+        viewModel.signedIn(this, requestCode, data)
     }
 
     ///// CODIFICACAO
@@ -76,8 +76,8 @@ class LoginActivity : BaseActivity() {
     /**
      * Método para mudar de tela para Home
      */
-    private fun moveHomeAction(credential: Credential?) {
-        startActivity(HomeActivity.getInstance(this))
+    private fun moveHomeAction() {
+        startActivity(MainActivity.getInstance(this))
         finish()
     }
 }

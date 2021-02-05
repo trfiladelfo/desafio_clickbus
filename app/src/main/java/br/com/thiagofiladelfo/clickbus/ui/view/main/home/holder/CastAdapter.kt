@@ -2,88 +2,39 @@ package br.com.thiagofiladelfo.clickbus.ui.view.main.home.holder
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.thiagofiladelfo.clickbus.data.model.Movie
-import org.json.JSONObject
+import br.com.thiagofiladelfo.clickbus.data.model.Cast
 
-class MovieAdapter: RecyclerView.Adapter<MovieHolder> () {
+class CastAdapter: RecyclerView.Adapter<CastHolder> () {
 
-    private val movies: ArrayList<Movie> = arrayListOf()
+    private val casts: ArrayList<Cast> = arrayListOf()
 
-    //Listeners
-    private lateinit var onItemClickListener: (movie: Movie) -> Unit
-    private lateinit var onFavoriteListener: (movie: Movie, favorited: Boolean) -> Unit
-    private lateinit var onShareListener: (movie: Movie) -> Unit
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastHolder =
+        CastHolder.getInstance(parent)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder =
-        MovieHolder.getInstance(parent)
-
-    override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        val data = movies[position]
-
-        //Eventos
-        if (::onFavoriteListener.isInitialized) {
-            holder.setOnFavoriteListener { movie, favorited -> onFavoriteListener(movie, favorited) }
-        }
-
-        if (::onShareListener.isInitialized) {
-            holder.setOnShareListener { onShareListener(data) }
-        }
-
-        if (::onItemClickListener.isInitialized) {
-            holder.itemView.setOnClickListener { onItemClickListener(data) }
-        }
-
+    override fun onBindViewHolder(holder: CastHolder, position: Int) {
+        val data = casts[position]
         holder.bind(data)
     }
 
-    override fun getItemCount(): Int = movies.size
+    override fun getItemCount(): Int = casts.size
 
     /////
 
-    /**
-     * Implemento do evento do click de um item específico
-     *
-     * @param listener Unit: objeto de referencia para o evento
-     * @return movie Movie: informações do item clicado
-     */
-    fun setOnItemClickListener(listener: (movie: Movie) -> Unit) {
-        this.onItemClickListener = listener
-    }
 
     /**
-     * Implemento do evento do click de favoritar um filme
-     *
-     * @param listener Unit: objeto de referencia para o evento
-     * @return movie Movie: informações do item clicado
+     * Limpa a listagem de atores
      */
-    fun setOnFavoriteListener(listener: (movie: Movie, favorited: Boolean) -> Unit) {
-        this.onFavoriteListener = listener
-    }
-
-    /**
-     * Implemento do evento do click de compartilhar um filme
-     *
-     * @param listener Unit: objeto de referencia para o evento
-     * @return movie Movie: informações do item clicado
-     */
-    fun setOnShareListener(listener: (movie: Movie) -> Unit) {
-        this.onShareListener = listener
-    }
-
-    /**
-     * Limpa a listagem de filmes
-     */
-    fun clear() = movies.clear()
+    fun clear() = casts.clear()
 
     /**
      * Adiciona a listagem para ser exibida
      */
-    fun add(movies: Collection<Movie>) = movies.forEach { this.movies.add(it) }
+    fun add(casts: Collection<Cast>) = casts.forEach { this.casts.add(it) }
 
     /**
-     * Adiciona um filme ao final da lista para ser exibido
+     * Adiciona um ator ao final da lista para ser exibido
      */
-    fun add(movie: Movie) = movies.add(movie)
+    fun add(cast: Cast) = casts.add(cast)
 
 
 }

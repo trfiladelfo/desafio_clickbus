@@ -1,5 +1,6 @@
-package br.com.thiagofiladelfo.clickbus.data
+package br.com.thiagofiladelfo.clickbus.data.repository.network
 
+import br.com.thiagofiladelfo.clickbus.share.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -9,12 +10,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 internal object Resources {
 
     // Instancia para conexão da API TMdb
-    private val API: Retrofit by lazy {
+    private val api: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(Constants.urlApi)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    val tmdbService: TmdbService by lazy { retrofit.create(TmdbService::class.java) }
+    val tmdbService: Service by lazy { api.create(Service::class.java) }
 }

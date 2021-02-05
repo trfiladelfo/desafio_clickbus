@@ -40,10 +40,10 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
     /**
      * Termina os procedimentos da autenticação do Usuário via Google Account
      */
-    fun signedIn(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) =
+    fun signedIn(activity: Activity, requestCode: Int, data: Intent?) =
         viewModelScope.launch {
             try {
-                val idToken = repository.signedIn(requestCode, resultCode, data)
+                val idToken = repository.signedIn(requestCode, data)
                 if (idToken != null) {
                     val credential = repository.getCredential(activity, idToken)
                     _credential.value = Emitter.Message(

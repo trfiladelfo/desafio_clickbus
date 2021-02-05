@@ -1,56 +1,53 @@
 package br.com.thiagofiladelfo.clickbus.ui.view.main.home
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
+import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
 import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
-import br.com.thiagofiladelfo.clickbus.databinding.HomeFragmentBinding
+import br.com.thiagofiladelfo.clickbus.databinding.HomeDetailFragmentBinding
+import br.com.thiagofiladelfo.clickbus.share.Constants
 import br.com.thiagofiladelfo.clickbus.share.Emitter
+import br.com.thiagofiladelfo.clickbus.share.extension.toDate
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseFragment
-import br.com.thiagofiladelfo.clickbus.ui.view.main.home.holder.MovieAdapter
+import br.com.thiagofiladelfo.clickbus.ui.view.main.MainActivity
+import br.com.thiagofiladelfo.clickbus.ui.view.main.home.holder.SectionsPagerAdapter
+import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
 
-class HomeFragment : BaseFragment() {
+class HomeDetailFragment : BaseFragment() {
+    private val args: HomeDetailFragmentArgs by navArgs()
 
-    private var _binding: HomeFragmentBinding? = null
+    private var _binding: HomeDetailFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels(
+        factoryProducer = { HomeViewModel.ViewModelFactory(MovieRepository()) }
+    )
 
-    private val adapter = MovieAdapter()
-
-    private val filterGenders: ArrayList<Int> = arrayListOf()
-    private var page = 1
+    private val adapter: SectionsPagerAdapter by lazy {  SectionsPagerAdapter(childFragmentManager) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = HomeFragmentBinding.inflate(inflater, container, false)
+        (requireActivity() as? MainActivity)?.supportActionBar?.title = args.movie.title
+
+        _binding = HomeDetailFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        viewModel = ViewModelProvider(
-            this,
-            HomeViewModel.ViewModelFactory(
-                MovieRepository()
-            )
-        ).get(HomeViewModel::class.java)
-
-        setInitializeComponentes()
+        setInitializeComponentes(args.movie)
         setObservables()
-
-        fetchMovies()
+        fetchMovieDetail(args.movie)
     }
 
     override fun onDestroy() {
@@ -61,83 +58,53 @@ class HomeFragment : BaseFragment() {
     ////// CODIFICACAO
 
     // Inicializadores ==============
-    private fun setInitializeComponentes() {
+    private fun setInitializeComponentes(movie: Movie) {
 
-        adapter.setOnFavoriteListener { movie, favorited -> viewModel.favoriteMovie(movie, favorited) }
-        adapter.setOnShareListener { shareMovie(it) }
-        binding.recycleViewMovies.adapter = adapter
+        Glide.with(binding.root)
+            .load(Constants.urlImageBackdropMovie(movie))
+            .into(binding.imageviewBackdrop)
 
+        Glide.with(binding.root)
+            .load(Constants.urlImagePosterMovie(movie))
+            .into(binding.imageviewPoster)
 
-        //Paginacao
-        binding.recycleViewMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0 && ! binding.swipeRefreshMovies.isRefreshing) {
-                    val manager = recyclerView.layoutManager as LinearLayoutManager
-
-                    val visibleItemCount = manager.childCount
-                    val totalItemCount = manager.itemCount
-                    val firstVisibleItemPosition = manager.findFirstVisibleItemPosition()
-
-                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                        fetchMovies(filterGenders.toTypedArray(), ++page)
-                    }
-                }
-            }
-        })
-
-        //Swipe Refresh
-        binding.swipeRefreshMovies.setOnRefreshListener {
-            page = 1
-            fetchMovies(filterGenders.toTypedArray(), page)
-        }
+        binding.textviewTitle.text = movie.title
+        binding.textviewDate.text = SimpleDateFormat("MMM yyyy").format(movie.releaseDate.toDate())
+        binding.tabs.setupWithViewPager(binding.viewpager)
     }
 
     private fun setObservables() {
-        viewModel.movies.observe(viewLifecycleOwner, {
+        viewModel.movie.observe(viewLifecycleOwner) {
             when(it.status) {
-                Emitter.Status.START ->  binding.swipeRefreshMovies.isRefreshing = true
-                Emitter.Status.COMPLETE -> showMovies(it.data ?: emptyList())
+                Emitter.Status.START -> {}
+                Emitter.Status.COMPLETE -> showMovieDetail(it.data!!)
                 Emitter.Status.ERROR -> {
-                    binding.swipeRefreshMovies.isRefreshing = false
                     AlertDialog.Builder(requireContext()).let { builder ->
                         builder.setMessage(it.error!!.message)
                         builder.setNegativeButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
                     }.create().show()
                 }
             }
-        })
+        }
     }
     // Inicializadores ==============
 
 
     //UI ==============
-    private fun showMovies(movies: List<Movie>) {
-        binding.swipeRefreshMovies.isRefreshing = false
-        if (movies.isNotEmpty()) {
-            adapter.add(movies)
-            adapter.notifyDataSetChanged()
-        }
+    private fun showMovieDetail(movie: MovieDetail) {
+        binding.textviewTime.text = "${(movie.runtime / 60)}h ${(movie.runtime % 60).toString().padStart(2, '0')}m"
+        binding.textviewStatus.text = movie.status
+        binding.textviewGenders.text = movie.genres.joinToString(" | ") { it.name }
+
+        adapter.movie = args.movie
+        adapter.movieDetail = movie
+        binding.viewpager.adapter = adapter
     }
     //UI ==============
 
     //Data ==============
-    private fun fetchMovies(genders: Array<Int> = emptyArray(), page: Int = 1) {
-        if (page == 1) adapter.clear()
-        viewModel.getMovies(genders = genders, page = page)
-    }
-
-    private fun shareMovie(movie: Movie) {
-
-        val url = "https://www.themoviedb.org/movie/${movie.id}?language=pt-BR"
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "Já assistiu a '${movie.title}'? \n ${url}")
-            type = "text/plain"
-        }
-
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
+    private fun fetchMovieDetail(movie: Movie) {
+        viewModel.getMovieDetail(movie)
     }
 
 }
