@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.WorkerThread
-import br.com.thiagofiladelfo.clickbus.R
+import br.com.thiagofiladelfo.clickbus.BuildConfig
 import br.com.thiagofiladelfo.clickbus.data.Repository
 import br.com.thiagofiladelfo.clickbus.data.model.Credential
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -31,7 +31,7 @@ class LoginRepository: Repository {
     @WorkerThread
     suspend fun signIn(activity: Activity) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(activity.getString(R.string.google_web_client_id))
+            .requestIdToken(BuildConfig.GOOGLE_WEB_CLIENT_ID)
             .requestEmail()
             .build()
 
@@ -40,7 +40,7 @@ class LoginRepository: Repository {
     }
 
     @WorkerThread
-    suspend fun signedIn(requestCode: Int, resultCode: Int, data: Intent?): String? {
+    suspend fun signedIn(requestCode: Int, data: Intent?): String? {
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             return task.getResult(ApiException::class.java)!!.idToken

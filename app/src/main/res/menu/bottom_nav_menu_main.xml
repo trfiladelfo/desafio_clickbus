@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_baseline_theaters_24"
+        android:title="Popular" />
+
+    <item
+        android:id="@+id/navigation_for_you"
+        android:icon="@drawable/ic_baseline_online_prediction_24"
+        android:title="Para Você" />
+
+    <item
+        android:id="@+id/navigation_favorite"
+        android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:title="Favoritos" />
+
+</menu>

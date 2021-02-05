@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- https://material-ui.com/pt/customization/color/ -->
+    <color name="blue_200">#01b4e4</color>
+    <color name="blue_500">#007d9f</color>
+    <color name="green_200">#90cea1</color>
+    <color name="green_500">#649070</color>
+
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

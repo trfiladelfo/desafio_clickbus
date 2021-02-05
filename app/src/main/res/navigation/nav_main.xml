@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mav_main"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="br.com.thiagofiladelfo.clickbus.ui.view.main.home.HomeFragment"
+        tools:layout="@layout/home_fragment"
+        >
+        <action
+            android:id="@+id/action_navigation_home_to_homeDetailFragment"
+            app:destination="@id/homeDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_for_you"
+        android:name="br.com.thiagofiladelfo.clickbus.ui.view.main.foryou.ForYouFragment"
+        tools:layout="@layout/for_you_fragment"
+        android:label="Para Você" />
+    <fragment
+        android:id="@+id/homeDetailFragment"
+        android:name="br.com.thiagofiladelfo.clickbus.ui.view.main.home.HomeDetailFragment"
+        tools:layout="@layout/home_detail_fragment"
+        android:label="Filme" >
+        <argument
+            android:name="movie"
+            app:argType="br.com.thiagofiladelfo.clickbus.data.model.Movie" />
+    </fragment>
+</navigation>

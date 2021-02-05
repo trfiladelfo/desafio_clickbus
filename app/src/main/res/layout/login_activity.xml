@@ -6,7 +6,7 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageview_logotipo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="82dp"
@@ -26,7 +26,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageview_logotipo" />
 
     <TextView
         android:id="@+id/textView2"
@@ -41,14 +41,13 @@
 
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textview_term_of_use"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Termo de Uso e Politica de Privacidade"
+        android:text="Termo de Uso e Política de Privacidade"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.developer.gbuttons.GoogleSignInButton
@@ -59,9 +58,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:text="Entrar com Google"
         android:textColor="#fff"
         app:isDarkTheme="true"
+        app:layout_constraintBottom_toTopOf="@+id/textview_term_of_use"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
