@@ -1,24 +1,20 @@
 package br.com.thiagofiladelfo.clickbus.ui.view.main.favorite
 
-import android.app.Activity
-import android.content.Intent
 import androidx.lifecycle.*
 import br.com.thiagofiladelfo.clickbus.App
-import br.com.thiagofiladelfo.clickbus.data.model.Credits
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
-import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
-import br.com.thiagofiladelfo.clickbus.share.Constants
+import br.com.thiagofiladelfo.clickbus.data.repository.FavoriteRepository
 import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.share.exception.TMException
 import kotlinx.coroutines.launch
 
-class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
+class FavoriteViewModel(private val repository: FavoriteRepository) : ViewModel() {
 
-    class ViewModelFactory(private val repository: MovieRepository) : ViewModelProvider.Factory {
+    class ViewModelFactory(private val repository: FavoriteRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             repository.context = App.applicationContext
-            return MovieViewModel(repository) as T
+            return FavoriteViewModel(repository) as T
         }
     }
 
@@ -30,9 +26,6 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
 
     private val _favorited = MutableLiveData<Emitter.Message<Movie>>()
     val favorited: LiveData<Emitter.Message<Movie>> = _favorited
-
-    private val _credits = MutableLiveData<Emitter.Message<Credits>>()
-    val credits: LiveData<Emitter.Message<Credits>> = _credits
 
     /**
      * Recupera a lista de filmes
@@ -53,48 +46,6 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
                 )
             }
         }
-
-    /**
-     * Recupera o detalhamento de um determinado filme
-     */
-    fun getMovieDetail(movie: Movie) =
-        viewModelScope.launch {
-            try {
-                val detail = repository.getMovieDetail(movie)
-                _movie.value = Emitter.Message(
-                    status = Emitter.Status.COMPLETE,
-                    data = detail
-                )
-
-            } catch (e: Exception) {
-                _movie.value = Emitter.Message(
-                    status = Emitter.Status.ERROR,
-                    error = TMException(e.message, e)
-                )
-            }
-        }
-
-
-    /**
-     * Recupera as pessoas que trabalharam neste filme
-     */
-    fun getCredits(movie: Movie) =
-        viewModelScope.launch {
-            try {
-                val credits = repository.getCredits(movie)
-                _credits.value = Emitter.Message(
-                    status = Emitter.Status.COMPLETE,
-                    data = credits
-                )
-
-            } catch (e: Exception) {
-                _credits.value = Emitter.Message(
-                    status = Emitter.Status.ERROR,
-                    error = TMException(e.message, e)
-                )
-            }
-        }
-
 
     /**
      * Marca ou remove o filme favorito

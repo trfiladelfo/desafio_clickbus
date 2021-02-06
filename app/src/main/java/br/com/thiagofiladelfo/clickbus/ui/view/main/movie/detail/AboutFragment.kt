@@ -16,14 +16,6 @@ class AboutFragment : BaseFragment() {
 
     private val currencyFormat = NumberFormat.getCurrencyInstance()
 
-    companion object {
-        fun newInstance(movie: MovieDetail): AboutFragment = AboutFragment().also {
-            it.arguments = Bundle().also {
-                it.putParcelable("movie", movie)
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,6 +38,25 @@ class AboutFragment : BaseFragment() {
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: AboutFragment? = null
+
+        /**
+         * Recupera a instancia da classe de manipulação dos filmes
+         */
+        fun newInstance(movie: MovieDetail): AboutFragment =
+            (INSTANCE ?: synchronized(this) {
+                AboutFragment().also {
+                    it.arguments = Bundle().also {
+                        it.putParcelable("movie", movie)
+                    }
+
+                    INSTANCE = it
+                }
+            })
     }
 
 }

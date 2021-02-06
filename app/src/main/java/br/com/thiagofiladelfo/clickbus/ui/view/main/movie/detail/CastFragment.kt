@@ -26,14 +26,6 @@ class CastFragment : BaseFragment() {
 
     private val adapter = CastAdapter()
 
-    companion object {
-        fun newInstance(movie: Movie): CastFragment = CastFragment().also {
-            it.arguments = Bundle().also {
-                it.putParcelable("movie", movie)
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,6 +68,25 @@ class CastFragment : BaseFragment() {
         adapter.clear()
         adapter.add(casts)
         adapter.notifyDataSetChanged()
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: CastFragment? = null
+
+        /**
+         * Recupera a instancia da classe de manipulação dos filmes
+         */
+        fun newInstance(movie: Movie): CastFragment =
+            (INSTANCE ?: synchronized(this) {
+                CastFragment().also {
+                    it.arguments = Bundle().also {
+                        it.putParcelable("movie", movie)
+                    }
+
+                    INSTANCE = it
+                }
+            })
     }
 
 }

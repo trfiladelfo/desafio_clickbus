@@ -65,7 +65,7 @@ class MovieFragment : BaseFragment() {
 
     fun searchMovie(query: String) {
         this.query = if (query.isNotEmpty())
-           query else null
+            query else null
 
         page = 1
         fetchMovies(page, query)

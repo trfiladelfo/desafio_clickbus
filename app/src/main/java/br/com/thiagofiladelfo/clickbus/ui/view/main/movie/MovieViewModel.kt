@@ -1,14 +1,11 @@
 package br.com.thiagofiladelfo.clickbus.ui.view.main.movie
 
-import android.app.Activity
-import android.content.Intent
 import androidx.lifecycle.*
 import br.com.thiagofiladelfo.clickbus.App
 import br.com.thiagofiladelfo.clickbus.data.model.Credits
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
 import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
-import br.com.thiagofiladelfo.clickbus.share.Constants
 import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.share.exception.TMException
 import kotlinx.coroutines.launch

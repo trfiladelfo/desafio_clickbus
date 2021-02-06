@@ -1,15 +1,12 @@
 package br.com.thiagofiladelfo.clickbus.ui.view.main.movie
 
 import android.app.AlertDialog
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
 import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
@@ -110,7 +107,8 @@ class MovieDetailFragment : BaseFragment() {
 
         viewModel.favorited.observe(viewLifecycleOwner, {
             when (it.status) {
-                Emitter.Status.START -> {}
+                Emitter.Status.START -> {
+                }
                 Emitter.Status.COMPLETE -> updateFavorited(it.data!!)
                 Emitter.Status.ERROR -> {
                     AlertDialog.Builder(requireContext()).let { builder ->
