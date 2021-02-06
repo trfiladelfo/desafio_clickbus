@@ -16,7 +16,7 @@ abstract class Repository : IRepository {
     }
 
     @Suppress("DEPRECATION")
-    private fun networkAvailable(): Boolean {
+    fun networkAvailable(): Boolean {
         val networkInfo =
             (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected

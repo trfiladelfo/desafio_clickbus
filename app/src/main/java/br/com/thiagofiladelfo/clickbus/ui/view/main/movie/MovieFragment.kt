@@ -15,9 +15,13 @@ import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
 import br.com.thiagofiladelfo.clickbus.databinding.MovieFragmentBinding
 import br.com.thiagofiladelfo.clickbus.share.Emitter
+import br.com.thiagofiladelfo.clickbus.share.exception.TMException
+import br.com.thiagofiladelfo.clickbus.share.exception.TMNetworkingException
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseFragment
 import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.Business
 import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter.MovieAdapter
+import com.facebook.shimmer.Shimmer
+import com.google.android.material.snackbar.Snackbar
 
 class MovieFragment : BaseFragment() {
 
@@ -52,8 +56,17 @@ class MovieFragment : BaseFragment() {
 
         setInitializeComponentes()
         setObservables()
-
         fetchMovies()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.shimmerViewContainer.startShimmer()
+    }
+
+    override fun onPause() {
+        binding.shimmerViewContainer.stopShimmer()
+        super.onPause()
     }
 
     override fun onDestroy() {
@@ -104,6 +117,10 @@ class MovieFragment : BaseFragment() {
             page = 1
             fetchMovies(page, query)
         }
+
+        arrayOf(binding.buttonTryAgainSearch, binding.buttonTryAgainNetwork).forEach {
+            it.setOnClickListener { fetchMovies(page, query) }
+        }
     }
 
     /**
@@ -116,10 +133,7 @@ class MovieFragment : BaseFragment() {
                 Emitter.Status.COMPLETE -> showMovies(it.data ?: emptyList())
                 Emitter.Status.ERROR -> {
                     binding.swipeRefreshMovies.isRefreshing = false
-                    AlertDialog.Builder(requireContext()).let { builder ->
-                        builder.setMessage(it.error!!.message)
-                        builder.setNegativeButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
-                    }.create().show()
+                    errorHandler(it.error!!)
                 }
             }
         })
@@ -148,9 +162,17 @@ class MovieFragment : BaseFragment() {
      */
     private fun showMovies(movies: List<Movie>) {
         binding.swipeRefreshMovies.isRefreshing = false
-        if (movies.isNotEmpty()) {
+
+        if (page == 1 && movies.isEmpty()) {
+            binding.viewflipper.displayedChild = 1
+
+        } else if (movies.isNotEmpty()) {
+            binding.viewflipper.displayedChild = 3
             adapter.add(movies)
             adapter.notifyDataSetChanged()
+        } else {
+            binding.viewflipper.displayedChild = 3
+            Snackbar.make(binding.root, "Você chegou ao final da lista", Snackbar.LENGTH_LONG).show()
         }
     }
 
@@ -162,6 +184,21 @@ class MovieFragment : BaseFragment() {
         if (index != -1)
             adapter.notifyItemChanged(index)
     }
+
+    private fun errorHandler(error: TMException) {
+        when(error) {
+            is TMNetworkingException -> binding.viewflipper.displayedChild = 2
+            else -> {
+                binding.viewflipper.displayedChild = 3
+                AlertDialog.Builder(requireContext()).let { builder ->
+                    builder.setMessage(error.message)
+                    builder.setNegativeButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
+                }.create().show()
+            }
+        }
+
+    }
+
     //UI ==============
 
     //Data ==============
@@ -169,7 +206,17 @@ class MovieFragment : BaseFragment() {
      * Recupera lista de dados dos filmes
      */
     private fun fetchMovies(page: Int = 1, query: String? = null) {
-        if (page == 1) adapter.clear()
+        if (page == 1) {
+            adapter.clear()
+            binding.viewflipper.displayedChild = 0
+            Shimmer.AlphaHighlightBuilder()
+                .setBaseAlpha(0f)
+                .setDuration(2000L)
+                .setDropoff(0.1f)
+                .setIntensity(0.35f)
+                .setShape(Shimmer.Shape.RADIAL)
+        }
+
         viewModel.getMovies(page = page, query)
     }
 

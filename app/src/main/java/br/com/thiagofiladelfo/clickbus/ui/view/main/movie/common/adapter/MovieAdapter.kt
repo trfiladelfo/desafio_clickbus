@@ -14,7 +14,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieHolder>() {
     private lateinit var onShareListener: (movie: Movie) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder =
-        MovieHolder.getInstance(parent)
+        MovieHolder.newInstance(parent)
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
         val data = movies[position]

@@ -1,5 +1,7 @@
 package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter
 
+import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,28 +10,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
+import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
 import br.com.thiagofiladelfo.clickbus.share.Constants
 import br.com.thiagofiladelfo.clickbus.share.extension.toDate
 import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.Business
+import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.detail.AboutFragment
 import com.bumptech.glide.Glide
 import com.shunan.circularprogressbar.CircularProgressBar
+import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
 
 class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
-
-    companion object {
-        /**
-         * Recupera a instancia para uma abrir uma activity
-         */
-        fun getInstance(parent: ViewGroup): MovieHolder = MovieHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.movie_holder,
-                parent,
-                false
-            )
-        )
-    }
 
     //Listeners
     private lateinit var onFavoriteListener: (movie: Movie) -> Unit
@@ -41,13 +33,16 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
      * Preenche os dados para popular a tela
      */
     fun bind(movie: Movie) {
+        Timber.d(movie.toString())
+
         view.findViewById<TextView>(R.id.textview_title).text = movie.title
         view.findViewById<TextView>(R.id.textview_context).text = movie.overview
-        view.findViewById<TextView>(R.id.textview_release_date).text =
-            sdf.format(movie.releaseDate.toDate())
+        view.findViewById<TextView>(R.id.textview_release_date).text = movie.releaseDate?.let {
+            try { sdf.format(it.toDate()) } catch (e: Throwable) { "" }
+        }
 
 
-        Business.rulesFavorited(view.findViewById<ImageButton>(R.id.button_favorite), movie)
+        Business.rulesFavorited(view.findViewById(R.id.button_favorite), movie)
 
         val average = movie.voteAverage
         view.findViewById<TextView>(R.id.text_view_average).text =
@@ -86,8 +81,11 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
             it.progress = (average.toFloat() * 10F).toInt()
         }
 
+
         Glide.with(view)
             .load(Constants.urlImagePosterMovie(movie))
+            .placeholder(R.drawable.ic_baseline_cloud_queue_24)
+            .error(R.drawable.not_found_poster)
             .into(view.findViewById(R.id.image_view_thumbnail))
 
 
@@ -124,6 +122,24 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
      */
     fun setOnShareListener(listener: (movie: Movie) -> Unit) {
         this.onShareListener = listener
+    }
+
+    companion object {
+        /**
+         * Recupera a instancia da classe de manipulação dos filmes
+         */
+        fun newInstance(parent: ViewGroup): MovieHolder =
+            synchronized(this) {
+                MovieHolder(
+                    LayoutInflater.from(parent.context).inflate(
+                        R.layout.movie_holder,
+                        parent,
+                        false
+                    )
+                ).also {
+                    Timber.tag("MovieHolder")
+                }
+            }
     }
 
 }

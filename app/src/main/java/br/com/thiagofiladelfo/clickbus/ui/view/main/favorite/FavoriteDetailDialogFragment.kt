@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.databinding.FavoriteDetailDialogFragmentBinding
 import br.com.thiagofiladelfo.clickbus.share.Constants
@@ -53,20 +54,26 @@ class FavoriteDetailDialogFragment : DialogFragment() {
     private fun setInitializeComponentes(movie: Movie) {
         Glide.with(binding.root)
             .load(Constants.urlImageBackdropMovie(movie))
+            .placeholder(R.drawable.ic_baseline_cloud_queue_24)
+            .error(R.drawable.not_found_backdrop)
             .into(binding.imageviewBackdrop)
 
         Glide.with(binding.root)
             .load(Constants.urlImagePosterMovie(movie))
+            .placeholder(R.drawable.ic_baseline_cloud_queue_24)
+            .error(R.drawable.not_found_poster)
             .into(binding.imageviewPoster)
 
         binding.textviewTitle.text = movie.title
-        binding.textviewDate.text = SimpleDateFormat("MMM yyyy").format(movie.releaseDate.toDate())
         binding.textviewContext.text = movie.overview
+
+        binding.textviewDate.text = movie.releaseDate?.let {
+            try { SimpleDateFormat("MMM yyyy").format(it.toDate ()) } catch (e:Throwable) { "" }
+        }
 
         updateFavorited(movie)
 
         binding.buttonShare.setOnClickListener { Business.shareMovie(requireActivity(), movie) }
-
     }
 
     // Inicializadores ==============

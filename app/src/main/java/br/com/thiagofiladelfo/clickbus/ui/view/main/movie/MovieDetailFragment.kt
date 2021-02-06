@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
 import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
@@ -66,15 +67,22 @@ class MovieDetailFragment : BaseFragment() {
 
         Glide.with(binding.root)
             .load(Constants.urlImageBackdropMovie(movie))
+            .placeholder(R.drawable.ic_baseline_cloud_queue_24)
+            .error(R.drawable.not_found_backdrop)
             .into(binding.imageviewBackdrop)
 
         Glide.with(binding.root)
             .load(Constants.urlImagePosterMovie(movie))
+            .placeholder(R.drawable.ic_baseline_cloud_queue_24)
+            .error(R.drawable.not_found_poster)
             .into(binding.imageviewPoster)
 
         binding.textviewTitle.text = movie.title
-        binding.textviewDate.text = SimpleDateFormat("MMM yyyy").format(movie.releaseDate.toDate())
         binding.tabs.setupWithViewPager(binding.viewpager)
+
+        binding.textviewDate.text = movie.releaseDate?.let {
+            try { SimpleDateFormat("MMM yyyy").format(it.toDate ()) } catch (e:Throwable) { "" }
+        }
 
         binding.buttonFavorite.setOnClickListener {
             movie.favorited = !movie.favorited
