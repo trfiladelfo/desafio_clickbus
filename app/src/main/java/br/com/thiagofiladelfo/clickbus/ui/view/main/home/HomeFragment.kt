@@ -69,7 +69,7 @@ class HomeFragment : BaseFragment() {
     // Inicializadores ==============
     private fun setInitializeComponentes() {
         adapter.setOnItemClickListener { showDetailMovie(it) }
-        adapter.setOnFavoriteListener { movie, favorited -> viewModel.favoriteMovie(movie, favorited) }
+        adapter.setOnFavoriteListener { viewModel.favoriteMovie(it) }
         adapter.setOnShareListener { shareMovie(it) }
         binding.recycleViewMovies.adapter = adapter
 
@@ -112,7 +112,22 @@ class HomeFragment : BaseFragment() {
                 }
             }
         })
+
+        viewModel.favorited.observe(viewLifecycleOwner, {
+            when(it.status) {
+                Emitter.Status.START ->  binding.swipeRefreshMovies.isRefreshing = true
+                Emitter.Status.COMPLETE -> updateFavorited(it.data!!)
+                Emitter.Status.ERROR -> {
+                    binding.swipeRefreshMovies.isRefreshing = false
+                    AlertDialog.Builder(requireContext()).let { builder ->
+                        builder.setMessage(it.error!!.message)
+                        builder.setNegativeButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
+                    }.create().show()
+                }
+            }
+        })
     }
+
     // Inicializadores ==============
 
 
@@ -123,6 +138,12 @@ class HomeFragment : BaseFragment() {
             adapter.add(movies)
             adapter.notifyDataSetChanged()
         }
+    }
+
+    private fun updateFavorited(movie: Movie) {
+        val index = adapter.indexOf(movie)
+        if(index != -1)
+            adapter.notifyItemChanged(index)
     }
     //UI ==============
 
@@ -138,14 +159,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun shareMovie(movie: Movie) {
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "Já assistiu a '${movie.title}'? \n ${Constants.urlMovie(movie)}")
-            type = "text/plain"
-        }
-
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
+        viewModel.shareMovie(requireActivity(), movie)
     }
 
 }

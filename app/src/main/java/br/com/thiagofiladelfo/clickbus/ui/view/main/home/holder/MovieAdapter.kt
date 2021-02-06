@@ -11,7 +11,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieHolder> () {
 
     //Listeners
     private lateinit var onItemClickListener: (movie: Movie) -> Unit
-    private lateinit var onFavoriteListener: (movie: Movie, favorited: Boolean) -> Unit
+    private lateinit var onFavoriteListener: (movie: Movie) -> Unit
     private lateinit var onShareListener: (movie: Movie) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder =
@@ -20,9 +20,9 @@ class MovieAdapter: RecyclerView.Adapter<MovieHolder> () {
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
         val data = movies[position]
 
-        //Eventos
+        //eventos
         if (::onFavoriteListener.isInitialized) {
-            holder.setOnFavoriteListener { movie, favorited -> onFavoriteListener(movie, favorited) }
+            holder.setOnFavoriteListener { movie -> onFavoriteListener(movie) }
         }
 
         if (::onShareListener.isInitialized) {
@@ -33,6 +33,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieHolder> () {
             holder.itemView.setOnClickListener { onItemClickListener(data) }
         }
 
+        //interface
         holder.bind(data)
     }
 
@@ -56,7 +57,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieHolder> () {
      * @param listener Unit: objeto de referencia para o evento
      * @return movie Movie: informações do item clicado
      */
-    fun setOnFavoriteListener(listener: (movie: Movie, favorited: Boolean) -> Unit) {
+    fun setOnFavoriteListener(listener: (movie: Movie) -> Unit) {
         this.onFavoriteListener = listener
     }
 
@@ -85,5 +86,9 @@ class MovieAdapter: RecyclerView.Adapter<MovieHolder> () {
      */
     fun add(movie: Movie) = movies.add(movie)
 
+    /**
+     * Retorna o índice do filme correspondente, ou -1 se a não contiver tal filme.
+     */
+    fun indexOf(movie: Movie): Int = movies.indexOfFirst { it.id == movie.id }
 
 }

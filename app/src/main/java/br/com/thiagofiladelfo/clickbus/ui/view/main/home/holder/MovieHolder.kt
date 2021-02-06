@@ -1,10 +1,14 @@
 package br.com.thiagofiladelfo.clickbus.ui.view.main.home.holder
 
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
@@ -31,7 +35,7 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
     }
 
     //Listeners
-    private lateinit var onFavoriteListener: (movie: Movie, favorited: Boolean) -> Unit
+    private lateinit var onFavoriteListener: (movie: Movie) -> Unit
     private lateinit var onShareListener: (movie: Movie) -> Unit
 
     private val sdf: DateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault())
@@ -47,6 +51,19 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         val average = (movie.voteAverage.toFloat() * 10F).toInt()
         view.findViewById<TextView>(R.id.text_view_average).text = if (average > 0) "${average}%" else "NR"
+
+        view.findViewById<ImageButton>(R.id.button_favorite).let {
+            when {
+                movie.favorited -> {
+                    it.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    it.setColorFilter(ContextCompat.getColor(view.context, android.R.color.holo_red_dark), PorterDuff.Mode.MULTIPLY)
+                }
+                else -> {
+                    it.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    it.setColorFilter(ContextCompat.getColor(view.context, android.R.color.white), PorterDuff.Mode.MULTIPLY)
+                }
+            }
+        }
 
         view.findViewById<CircularProgressBar>(R.id.circle_view_average).let {
             /*
@@ -86,10 +103,11 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
             .into(view.findViewById(R.id.image_view_thumbnail))
 
 
-        //Eventos
+        //eventos
         if (::onFavoriteListener.isInitialized) {
             view.findViewById<ImageButton>(R.id.button_favorite).setOnClickListener {
-                onFavoriteListener.invoke(movie, true)
+                movie.favorited = !movie.favorited
+                onFavoriteListener.invoke(movie)
             }
         }
 
@@ -106,7 +124,7 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
      * @param listener Unit: objeto de referencia para o evento
      * @return movie Movie: informações do item clicado
      */
-    fun setOnFavoriteListener(listener: (movie: Movie, favorited: Boolean) -> Unit) {
+    fun setOnFavoriteListener(listener: (movie: Movie) -> Unit) {
         this.onFavoriteListener = listener
     }
 

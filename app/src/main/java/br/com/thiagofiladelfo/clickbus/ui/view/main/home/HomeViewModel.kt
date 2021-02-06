@@ -1,5 +1,7 @@
 package br.com.thiagofiladelfo.clickbus.ui.view.main.home
 
+import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.*
 import br.com.thiagofiladelfo.clickbus.App
 import br.com.thiagofiladelfo.clickbus.data.model.Cast
@@ -7,8 +9,10 @@ import br.com.thiagofiladelfo.clickbus.data.model.Credits
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
 import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
+import br.com.thiagofiladelfo.clickbus.share.Constants
 import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.share.exception.TMException
+import br.com.thiagofiladelfo.clickbus.ui.view.main.MainActivity
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
@@ -25,6 +29,9 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
 
     private val _movie = MutableLiveData<Emitter.Message<MovieDetail>>()
     val movie: LiveData<Emitter.Message<MovieDetail>> = _movie
+
+    private val _favorited = MutableLiveData<Emitter.Message<Movie>>()
+    val favorited: LiveData<Emitter.Message<Movie>> = _favorited
 
     private val _credits = MutableLiveData<Emitter.Message<Credits>>()
     val credits: LiveData<Emitter.Message<Credits>> = _credits
@@ -95,17 +102,35 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
     /**
      * Marca ou remove o filme favorito
      */
-    fun favoriteMovie(movie: Movie, favorited: Boolean) =
+    fun favoriteMovie(movie: Movie) =
         viewModelScope.launch {
             try {
-                val movie = repository.favoriteMovie(movie, favorited)
+                val movie = repository.favoriteMovie(movie)
+                _favorited.value = Emitter.Message(
+                    status = Emitter.Status.COMPLETE,
+                    data = movie
+                )
 
             } catch(e:Exception) {
-                _movies.value = Emitter.Message(
+                _favorited.value = Emitter.Message(
                     status = Emitter.Status.ERROR,
                     error = TMException(e.message, e)
                 )
             }
+    }
+
+    /**
+     * Compartilha os dados do filme
+     */
+    fun shareMovie(activity: Activity, movie: Movie) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "Já assistiu a '${movie.title}'? \n ${Constants.urlMovie(movie)}")
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        activity.startActivity(shareIntent)
     }
 
 

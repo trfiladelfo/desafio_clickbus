@@ -1,12 +1,16 @@
 package br.com.thiagofiladelfo.clickbus.ui.view.main.home
 
 import android.app.AlertDialog
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
 import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
@@ -71,6 +75,23 @@ class HomeDetailFragment : BaseFragment() {
         binding.textviewTitle.text = movie.title
         binding.textviewDate.text = SimpleDateFormat("MMM yyyy").format(movie.releaseDate.toDate())
         binding.tabs.setupWithViewPager(binding.viewpager)
+
+        binding.buttonFavorite.let {
+            it.setOnClickListener { viewModel.favoriteMovie(movie) }
+            when {
+                movie.favorited -> {
+                    it.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    it.setColorFilter(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark), PorterDuff.Mode.MULTIPLY)
+                }
+                else -> {
+                    it.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    it.setColorFilter(ContextCompat.getColor(requireContext(), android.R.color.white), PorterDuff.Mode.MULTIPLY)
+                }
+            }
+        }
+
+        binding.buttonShare.setOnClickListener { viewModel.shareMovie(requireActivity(), movie) }
+
     }
 
     private fun setObservables() {
@@ -92,7 +113,15 @@ class HomeDetailFragment : BaseFragment() {
 
     //UI ==============
     private fun showMovieDetail(movie: MovieDetail) {
-        binding.textviewTime.text = "${(movie.runtime / 60)}h ${(movie.runtime % 60).toString().padStart(2, '0')}m"
+        binding.textviewTime.text = movie.runtime.let {
+            val buffer = StringBuffer("${(movie.runtime / 60)}h")
+
+            val minute = (movie.runtime % 60)
+            if (minute != 0)
+                buffer.append(" ${minute.toString().padStart(2, '0')}m")
+            buffer.toString()
+        }
+
         binding.textviewStatus.text = movie.status
         binding.textviewGenders.text = movie.genres.joinToString(" | ") { it.name }
 

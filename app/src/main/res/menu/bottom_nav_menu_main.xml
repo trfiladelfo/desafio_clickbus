@@ -7,11 +7,6 @@
         android:title="Popular" />
 
     <item
-        android:id="@+id/navigation_for_you"
-        android:icon="@drawable/ic_baseline_online_prediction_24"
-        android:title="Para Você" />
-
-    <item
         android:id="@+id/navigation_favorite"
         android:icon="@drawable/ic_baseline_favorite_border_24"
         android:title="Favoritos" />

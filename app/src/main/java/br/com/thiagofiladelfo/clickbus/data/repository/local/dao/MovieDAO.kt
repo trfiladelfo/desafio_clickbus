@@ -1,10 +1,11 @@
-package br.com.thiagofiladelfo.clickbus.data.repository.local
+package br.com.thiagofiladelfo.clickbus.data.repository.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import br.com.thiagofiladelfo.clickbus.data.model.Movie
+import br.com.thiagofiladelfo.clickbus.data.repository.local.dao.entity.Movie
+
 
 /**
  * Interface para acessar os dados de filmes no armazenamento interno do dispositivo
@@ -18,11 +19,14 @@ interface MovieDAO {
     @Query("SELECT * FROM movie ORDER BY title ASC")
     fun getMovies(): List<Movie>
 
+    @Query("SELECT * FROM movie WHERE id = :id")
+    fun getMovie(id: Int): Movie?
+
     /**
-     * Insere um filme no banco de dados (SQLite) do dispositivo para recuperar
+     * Insere ou atualiza um filme no banco de dados (SQLite) do dispositivo para recuperar
      * posteriormente como um favorito
      */
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE) //para inserir ou atualizar quando existir
     suspend fun insert(movie: Movie)
 
     /**

@@ -1,18 +1,14 @@
 package br.com.thiagofiladelfo.clickbus.data.repository
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.annotation.WorkerThread
 import br.com.thiagofiladelfo.clickbus.data.Repository
 import br.com.thiagofiladelfo.clickbus.data.model.Credits
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
+import br.com.thiagofiladelfo.clickbus.data.repository.local.dao.database.MovieDatabase
 import br.com.thiagofiladelfo.clickbus.data.repository.network.Resources
 import br.com.thiagofiladelfo.clickbus.data.repository.network.Service
-import br.com.thiagofiladelfo.clickbus.share.Constants
-import br.com.thiagofiladelfo.clickbus.share.extension.md5
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -21,12 +17,17 @@ class MovieRepository: Repository {
     constructor(context: Context): super(context)
 
     private val service: Service = Resources.tmdbService
+    private val localStore by lazy {
+        val database = MovieDatabase.getDatabase(context)
+        database.movieDAO()
+    }
 
     /**
      * Busca a listagem de filmes
      * @param genders = Códigos dos generos - Opcional
      * @param page = Posição de página - Obrigatório, valor padrão 1 (um)
      */
+
     suspend fun getMovies(genders: Array<Int> = emptyArray(), page: Int = 1): List<Movie> =
         withContext(Dispatchers.IO) {
             val response = service.getPopularMovies(
@@ -34,9 +35,12 @@ class MovieRepository: Repository {
                 page = page
             ).execute()
 
-            if (response.isSuccessful)
-                response.body().results
-            else throw Exception("Sorry, o carregamento dos filmes falhou")
+            if (response.isSuccessful) {
+                val favorited = localStore.getMovies().associate { it.id to it.favorited }
+                response.body().results.onEach {
+                    it.favorited = favorited.getOrDefault(it.id, false)
+                }
+            } else throw Exception("Sorry, o carregamento dos filmes falhou")
         }
 
     suspend fun getMovieDetail(movie: Movie): MovieDetail =
@@ -48,8 +52,8 @@ class MovieRepository: Repository {
             else throw Exception("Sorry, o carregamento do filme falhou")
     }
 
-    suspend fun favoriteMovie(movie: Movie, favorited: Boolean): Boolean =
-        withContext(Dispatchers.IO) {
+    @WorkerThread
+    suspend fun favoriteMovie(movie: Movie): Movie {
 
             /** Bloco para saber no firebase *
             val user = Firebase.auth.currentUser
@@ -60,12 +64,16 @@ class MovieRepository: Repository {
             true
             */
 
-            context.getSharedPreferences(Constants.sharePreferences.favorite, Context.MODE_PRIVATE).edit().let {
-                it.putBoolean(movie.id.toString(), favorited)
-                it.apply()
-                it.commit()
-            }
+//            context.getSharedPreferences(Constants.sharePreferences.favorite, Context.MODE_PRIVATE).edit().let {
+//                it.putBoolean(movie.id.toString(), favorited)
+//                it.apply()
+//                it.commit()
+//            }
 
+            val entity = br.com.thiagofiladelfo.clickbus.data.repository.local.dao.entity.Movie(movie)
+            if (movie.favorited) localStore.insert(entity)
+            else localStore.delete(entity.id)
+            return movie
     }
 
     suspend fun getCredits(movie: Movie): Credits =
