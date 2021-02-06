@@ -116,22 +116,5 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
             }
         }
 
-    /**
-     * Compartilha os dados do filme
-     */
-    fun shareMovie(activity: Activity, movie: Movie) {
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(
-                Intent.EXTRA_TEXT,
-                "Já assistiu a '${movie.title}'? \n ${Constants.urlMovie(movie)}"
-            )
-            type = "text/plain"
-        }
-
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        activity.startActivity(shareIntent)
-    }
-
 
 }

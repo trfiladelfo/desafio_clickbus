@@ -37,7 +37,7 @@ class MovieRepository : Repository {
 
             if (response.isSuccessful) {
                 val favorited = localStore.getMovies().associate { it.id to it.favorited }
-                response.body().results.onEach {
+                response.body()!!.results.onEach {
                     it.favorited = favorited.getOrDefault(it.id, false)
                 }
             } else throw Exception("Sorry, o carregamento dos filmes falhou")
@@ -48,7 +48,7 @@ class MovieRepository : Repository {
             val response = service.getMovieDetail(id = movie.id).execute()
 
             if (response.isSuccessful)
-                response.body()
+                response.body()!!
             else throw Exception("Sorry, o carregamento do filme falhou")
         }
 
@@ -81,7 +81,7 @@ class MovieRepository : Repository {
             val response = service.getCredits(id = movie.id).execute()
 
             if (response.isSuccessful)
-                response.body()
+                response.body()!!
             else throw Exception("Sorry, o carregamento dos creditos falhou")
         }
 

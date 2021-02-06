@@ -16,7 +16,8 @@ import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
 import br.com.thiagofiladelfo.clickbus.databinding.MovieFragmentBinding
 import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseFragment
-import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.holder.MovieAdapter
+import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.Business
+import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter.MovieAdapter
 
 class MovieFragment : BaseFragment() {
 
@@ -168,7 +169,7 @@ class MovieFragment : BaseFragment() {
      * Realiza o compartilhamento dos dados de um filme
      */
     private fun shareMovie(movie: Movie) {
-        viewModel.shareMovie(requireActivity(), movie)
+        Business.shareMovie(requireActivity(), movie)
     }
 
     /**

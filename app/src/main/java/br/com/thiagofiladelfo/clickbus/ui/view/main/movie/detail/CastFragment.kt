@@ -13,7 +13,7 @@ import br.com.thiagofiladelfo.clickbus.databinding.CastMovieDetailFragmentBindin
 import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseFragment
 import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.MovieViewModel
-import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.holder.CastAdapter
+import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter.CastAdapter
 
 class CastFragment : BaseFragment() {
 
