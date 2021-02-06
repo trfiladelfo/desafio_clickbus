@@ -11,7 +11,7 @@
     <string name="content_description_button_favorite">Botão para favoritar um filme</string>
     <string name="content_description_image_alert">Imagem de alerta</string>
     <string name="synopsis">Sinopse</string>
-    <string name="message_alert_empty_favorite">Oops, you didn\'t favor any movies</string>
+    <string name="message_alert_empty_favorite">Ops, você não favoritou nenhum filme </string>
     <string name="nr">NR</string>
     <string name="content_description_image_logotipo">Logotipo do aplicativo</string>
     <string name="application_subtitle">Tem todos os filmes que imagina</string>
