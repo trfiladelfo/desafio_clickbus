@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Orçamento: "
+            android:text="@string/budget"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Receita: "
+            android:text="@string/revenue"
             android:textSize="12sp"
             android:textStyle="bold"
             />

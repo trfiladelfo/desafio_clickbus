@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="221dp"
             android:scaleType="matrix"
+            android:contentDescription="@string/content_description_image_backdrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -31,6 +32,7 @@
             android:scaleType="centerCrop"
             android:layout_marginStart="16dp"
             android:layout_marginTop="158dp"
+            android:contentDescription="@string/content_description_image_poster"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
@@ -75,6 +77,7 @@
                     android:layout_marginHorizontal="2dp"
                     android:background="?android:selectableItemBackground"
                     android:padding="8dp"
+                    android:contentDescription="@string/content_description_button_share"
                     android:src="@drawable/ic_baseline_share_24" />
 
             </LinearLayout>
@@ -86,7 +89,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sinopse"
+        android:text="@string/synopsis"
         android:textSize="16sp"
         android:layout_marginVertical="10dp"
         android:textStyle="bold" />

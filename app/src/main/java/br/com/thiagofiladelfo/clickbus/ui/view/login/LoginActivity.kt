@@ -11,16 +11,10 @@ import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseActivity
 import br.com.thiagofiladelfo.clickbus.ui.view.main.MainActivity
 
+/**
+ * Classe responsável pelo tratamento do ingresso do usuário
+ */
 class LoginActivity : BaseActivity() {
-
-    companion object {
-        /**
-         * Recupera a instancia para uma abrir uma activity
-         */
-        fun getInstance(context: Context): Intent {
-            return Intent(context, LoginActivity::class.java)
-        }
-    }
 
     private lateinit var viewModel: LoginViewModel      //viewModel
     private lateinit var binding: LoginActivityBinding  //ViewBinding
@@ -79,5 +73,14 @@ class LoginActivity : BaseActivity() {
     private fun moveHomeAction() {
         startActivity(MainActivity.getInstance(this))
         finish()
+    }
+
+    companion object {
+        /**
+         * Recupera a instancia para uma abrir uma activity
+         */
+        fun getInstance(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java)
+        }
     }
 }

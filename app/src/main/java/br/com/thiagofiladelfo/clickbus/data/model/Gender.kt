@@ -4,6 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Classe representativa do gênero do filme
+ */
 data class Gender(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String

@@ -15,6 +15,9 @@ import br.com.thiagofiladelfo.clickbus.ui.base.BaseFragment
 import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.MovieViewModel
 import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter.CastAdapter
 
+/**
+ * Fragmento responsável pela exibição da aba de Elenco do detalhamento de um filme
+ */
 class CastFragment : BaseFragment() {
 
     private var _binding: CastMovieDetailFragmentBinding? = null
@@ -44,10 +47,10 @@ class CastFragment : BaseFragment() {
 
         viewModel.credits.observe(viewLifecycleOwner) {
             when (it.status) {
-                Emitter.Status.START -> {
-                }
+                Emitter.Status.START -> binding.swipeRefreshCasts.isRefreshing = true
                 Emitter.Status.COMPLETE -> showActors(it.data!!.cast)
                 Emitter.Status.ERROR -> {
+                    binding.swipeRefreshCasts.isRefreshing = false
                     AlertDialog.Builder(requireContext()).let { builder ->
                         builder.setMessage(it.error!!.message)
                         builder.setNegativeButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
@@ -64,7 +67,11 @@ class CastFragment : BaseFragment() {
         super.onDestroy()
     }
 
+    /**
+     * Exibe a listagem com o elenco do filme
+     */
     private fun showActors(casts: List<Cast>) {
+        binding.swipeRefreshCasts.isRefreshing = false
         adapter.clear()
         adapter.add(casts)
         adapter.notifyDataSetChanged()

@@ -16,6 +16,9 @@ import br.com.thiagofiladelfo.clickbus.ui.view.main.favorite.FavoriteViewModel
 import br.com.thiagofiladelfo.clickbus.ui.view.main.favorite.common.adapter.FavoriteAdapter
 import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.Business
 
+/**
+ * Fragmento responsável por exibir a lsita de filmes favoritado
+ */
 class FavoriteFragment : BaseFragment() {
 
     private var _binding: FavoriteFragmentBinding? = null
@@ -163,6 +166,9 @@ class FavoriteFragment : BaseFragment() {
         Business.shareMovie(requireActivity(), movie)
     }
 
+    /**
+     * Realiza o remoção da listagem de filmes favoritado
+     */
     private fun removeFavorite(movie: Movie) {
         AlertDialog.Builder(requireContext()).let { builder ->
             builder.setMessage("Deseja realmente remover o filme '${movie.title}' dos favoritos?")

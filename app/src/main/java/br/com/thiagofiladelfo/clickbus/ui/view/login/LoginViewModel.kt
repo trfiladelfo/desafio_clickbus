@@ -11,6 +11,9 @@ import br.com.thiagofiladelfo.clickbus.share.exception.TMException
 import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
 
+/**
+ * Classe de manipulação dos dados do ingresso do usuário
+ */
 class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
 
     /**

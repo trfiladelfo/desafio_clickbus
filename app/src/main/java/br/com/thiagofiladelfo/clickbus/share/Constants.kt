@@ -1,5 +1,6 @@
 package br.com.thiagofiladelfo.clickbus.share
 
+import android.annotation.SuppressLint
 import br.com.thiagofiladelfo.clickbus.data.model.Cast
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import java.util.*
@@ -14,6 +15,7 @@ object Constants {
     /**
      * Localidade padrão do sistema
      */
+    @SuppressLint("ConstantLocale")
     val systemLanguage: String = "${Locale.getDefault().language}-${Locale.getDefault().country}"
 
     /**

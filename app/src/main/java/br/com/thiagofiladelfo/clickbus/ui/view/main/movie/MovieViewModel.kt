@@ -11,6 +11,9 @@ import br.com.thiagofiladelfo.clickbus.share.exception.TMException
 import br.com.thiagofiladelfo.clickbus.share.exception.TMNetworkingException
 import kotlinx.coroutines.launch
 
+/**
+ * Classe de manipulação para exibição dos filmes populares
+ */
 class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
 
     class ViewModelFactory(private val repository: MovieRepository) : ViewModelProvider.Factory {
@@ -106,10 +109,9 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
     fun favoriteMovie(movie: Movie) =
         viewModelScope.launch {
             try {
-                val movie = repository.favoriteMovie(movie)
                 _favorited.value = Emitter.Message(
                     status = Emitter.Status.COMPLETE,
-                    data = movie
+                    data = repository.favoriteMovie(movie)
                 )
 
             } catch (e: Exception) {

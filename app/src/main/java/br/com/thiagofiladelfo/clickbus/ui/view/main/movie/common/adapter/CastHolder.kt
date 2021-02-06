@@ -10,6 +10,10 @@ import br.com.thiagofiladelfo.clickbus.data.model.Cast
 import br.com.thiagofiladelfo.clickbus.share.Constants
 import com.bumptech.glide.Glide
 
+/**
+ * Responsável por exibir o item da listagem do elenco do filme
+ * @param view - classe de visualização representativa da célula
+ */
 class CastHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     companion object {

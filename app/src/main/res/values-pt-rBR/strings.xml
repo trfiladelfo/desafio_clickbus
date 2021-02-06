@@ -2,4 +2,30 @@
 <resources>
     <string name="app_name">The Movies</string>
     <string name="hello_say_movie_name">Olá, diga um nome de filme</string>
+    <string name="budget">Orçamento: </string>
+    <string name="revenue">Receita: </string>
+    <string name="content_description_cast_profile">Imagem do perfil do autor que participou deste filme</string>
+    <string name="content_description_image_backdrop">Banner promocional do filme</string>
+    <string name="content_description_image_poster">Capa promocional do filme</string>
+    <string name="content_description_button_share">Botão para realizar o compartilhamento do filme</string>
+    <string name="content_description_button_favorite">Botão para favoritar um filme</string>
+    <string name="content_description_image_alert">Imagem de alerta</string>
+    <string name="synopsis">Sinopse</string>
+    <string name="message_alert_empty_favorite">Oops, you didn\'t favor any movies</string>
+    <string name="nr">NR</string>
+    <string name="content_description_image_logotipo">Logotipo do aplicativo</string>
+    <string name="application_subtitle">Tem todos os filmes que imagina</string>
+    <string name="term_of_use">Termo de Uso e Política de Privacidade</string>
+    <string name="login_with_google">Entrar com Google</string>
+    <string name="title_search">Procura por título</string>
+    <string name="content_description_button_voice_search">Botão para realizar a busca via voz</string>
+    <string name="content_description_image_avatar">Imagem do perfil do usuário</string>
+    <string name="try_again">Vamos tentar novamente?</string>
+    <string name="movie_not_found">Oops, no meu acervo de filmes não encontrei nada do que estava procurando. Vamos tentar buscar outro filme?</string>
+    <string name="error_internet_communication">Não estamos conseguindo estabelecer comunicação, verifique sua comunicação com a Internet</string>
+    <string name="release">Lançamento: </string>
+    <string name="popular">Popular</string>
+    <string name="cast">Elenco</string>
+    <string name="about">Sobre</string>
+    <string name="favorites">Favoritos</string>
 </resources>

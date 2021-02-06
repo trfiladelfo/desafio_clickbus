@@ -4,6 +4,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.thiagofiladelfo.clickbus.data.model.Cast
 
+
+/**
+ * Manipulador da listagem de atores do elenco do filme
+ */
 class CastAdapter : RecyclerView.Adapter<CastHolder>() {
 
     private val casts: ArrayList<Cast> = arrayListOf()
@@ -19,7 +23,6 @@ class CastAdapter : RecyclerView.Adapter<CastHolder>() {
     override fun getItemCount(): Int = casts.size
 
     /////
-
 
     /**
      * Limpa a listagem de atores

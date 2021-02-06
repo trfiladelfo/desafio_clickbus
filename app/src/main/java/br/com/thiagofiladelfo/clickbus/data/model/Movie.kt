@@ -5,6 +5,9 @@ import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Classe representativa do json do filme
+ */
 data class Movie(
     @SerializedName("id") val id: Int,
     @SerializedName("title") val title: String,

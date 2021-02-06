@@ -33,6 +33,7 @@
                     android:layout_width="280dp"
                     android:layout_height="280dp"
                     android:layout_gravity="center"
+                    android:contentDescription="@string/content_description_image_alert"
                     android:src="@drawable/ic_notification" />
 
                 <TextView
@@ -41,7 +42,7 @@
                     android:textAlignment="center"
                     android:textSize="22sp"
                     android:layout_margin="15dp"
-                    android:text="Oops, você não favoritou nenhum filme"
+                    android:text="@string/message_alert_empty_favorite"
                     />
 
             </LinearLayout>
@@ -61,8 +62,8 @@
                 android:id="@+id/recycle_view_movies"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@android:color/black"
-                android:dividerHeight="8dp"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="4dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="3"
                 tools:listitem="@layout/favorite_holder" />

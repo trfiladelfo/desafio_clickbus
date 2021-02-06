@@ -4,6 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Classe representativa do json do ator do filme
+ */
 data class Cast(
     @SerializedName("adult") val adult: Boolean,
     @SerializedName("gender") val gender: Int,

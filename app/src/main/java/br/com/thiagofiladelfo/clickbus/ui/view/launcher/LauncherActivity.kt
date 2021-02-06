@@ -18,9 +18,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
+/**
+ * Classe inicializadora da aplicação
+ */
 class LauncherActivity : BaseActivity(R.layout.launcher_activity) {
 
+    // Objeto do Firebase para autenticação
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {

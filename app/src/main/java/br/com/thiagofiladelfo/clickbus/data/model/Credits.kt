@@ -4,6 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Classe representativa da listagem dos elenco do filme
+ */
 data class Credits(
     @SerializedName("id") val id: Int,
     @SerializedName("cast") val cast: List<Cast>
