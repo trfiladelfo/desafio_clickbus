@@ -1,4 +1,4 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.holder
+package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

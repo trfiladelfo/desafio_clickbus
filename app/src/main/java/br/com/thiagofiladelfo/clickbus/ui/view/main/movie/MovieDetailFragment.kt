@@ -19,7 +19,8 @@ import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.share.extension.toDate
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseFragment
 import br.com.thiagofiladelfo.clickbus.ui.view.main.MainActivity
-import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.holder.SectionsPagerAdapter
+import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.Business
+import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter.SectionsPagerAdapter
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 
@@ -78,31 +79,14 @@ class MovieDetailFragment : BaseFragment() {
         binding.textviewDate.text = SimpleDateFormat("MMM yyyy").format(movie.releaseDate.toDate())
         binding.tabs.setupWithViewPager(binding.viewpager)
 
-        binding.buttonFavorite.let {
-            it.setOnClickListener { viewModel.favoriteMovie(movie) }
-            when {
-                movie.favorited -> {
-                    it.setImageResource(R.drawable.ic_baseline_favorite_24)
-                    it.setColorFilter(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            android.R.color.holo_red_dark
-                        ), PorterDuff.Mode.MULTIPLY
-                    )
-                }
-                else -> {
-                    it.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                    it.setColorFilter(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            android.R.color.white
-                        ), PorterDuff.Mode.MULTIPLY
-                    )
-                }
-            }
+        binding.buttonFavorite.setOnClickListener {
+            movie.favorited = !movie.favorited
+            viewModel.favoriteMovie(movie)
         }
+        updateFavorited(movie)
 
-        binding.buttonShare.setOnClickListener { viewModel.shareMovie(requireActivity(), movie) }
+
+        binding.buttonShare.setOnClickListener { Business.shareMovie(requireActivity(), movie) }
 
     }
 
@@ -123,6 +107,19 @@ class MovieDetailFragment : BaseFragment() {
                 }
             }
         }
+
+        viewModel.favorited.observe(viewLifecycleOwner, {
+            when (it.status) {
+                Emitter.Status.START -> {}
+                Emitter.Status.COMPLETE -> updateFavorited(it.data!!)
+                Emitter.Status.ERROR -> {
+                    AlertDialog.Builder(requireContext()).let { builder ->
+                        builder.setMessage(it.error!!.message)
+                        builder.setNegativeButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
+                    }.create().show()
+                }
+            }
+        })
     }
     // Inicializadores ==============
 
@@ -147,6 +144,13 @@ class MovieDetailFragment : BaseFragment() {
         adapter.movie = args.movie
         adapter.movieDetail = movie
         binding.viewpager.adapter = adapter
+    }
+
+    /**
+     * Atualiza informação do filme para sinalizar que favoritou um não
+     */
+    private fun updateFavorited(movie: Movie) {
+        Business.rulesFavorited(binding.buttonFavorite, movie)
     }
     //UI ==============
 

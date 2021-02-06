@@ -1,4 +1,4 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.holder
+package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

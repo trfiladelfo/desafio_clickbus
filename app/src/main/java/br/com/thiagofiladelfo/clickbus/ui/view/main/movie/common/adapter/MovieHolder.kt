@@ -1,4 +1,4 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.holder
+package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter
 
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import br.com.thiagofiladelfo.clickbus.share.Constants
 import br.com.thiagofiladelfo.clickbus.share.extension.toDate
 import com.bumptech.glide.Glide
 import com.shunan.circularprogressbar.CircularProgressBar
+import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.Business
 import java.text.DateFormat
 import java.util.*
 
@@ -51,26 +52,7 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
         view.findViewById<TextView>(R.id.text_view_average).text =
             if (average > 0) "${average}%" else "NR"
 
-        view.findViewById<ImageButton>(R.id.button_favorite).let {
-            when {
-                movie.favorited -> {
-                    it.setImageResource(R.drawable.ic_baseline_favorite_24)
-                    it.setColorFilter(
-                        ContextCompat.getColor(
-                            view.context,
-                            android.R.color.holo_red_dark
-                        ), PorterDuff.Mode.MULTIPLY
-                    )
-                }
-                else -> {
-                    it.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                    it.setColorFilter(
-                        ContextCompat.getColor(view.context, android.R.color.white),
-                        PorterDuff.Mode.MULTIPLY
-                    )
-                }
-            }
-        }
+        Business.rulesFavorited(view.findViewById<ImageButton>(R.id.button_favorite), movie)
 
         view.findViewById<CircularProgressBar>(R.id.circle_view_average).let {
             /*
