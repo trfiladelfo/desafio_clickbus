@@ -9,14 +9,15 @@ import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
 import br.com.thiagofiladelfo.clickbus.data.repository.local.dao.database.MovieDatabase
 import br.com.thiagofiladelfo.clickbus.data.repository.network.Resources
 import br.com.thiagofiladelfo.clickbus.data.repository.network.Service
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class MovieRepository : Repository {
+class FavoriteRepository : Repository {
     constructor()
     constructor(context: Context) : super(context)
 
-    private val service: Service = Resources.tmdbService
     private val localStore by lazy {
         val database = MovieDatabase.getDatabase(context)
         database.movieDAO()
@@ -27,29 +28,30 @@ class MovieRepository : Repository {
      * @param genders = Códigos dos generos - Opcional
      * @param page = Posição de página - Obrigatório, valor padrão 1 (um)
      */
-
     suspend fun getMovies(page: Int = 1, query: String? = null): List<Movie> =
         withContext(Dispatchers.IO) {
-            val response = (when {
-                query == null || query.isEmpty() -> service.getPopularMovies(page = page)
-                else -> service.getMoviesByQuery(page = page, query=query)
-            }).execute()
-
-            if (response.isSuccessful) {
-                val favorited = localStore.getMovies().associate { it.id to it.favorited }
-                response.body()!!.results.onEach {
-                    it.favorited = favorited.getOrDefault(it.id, false)
-                }
-            } else throw Exception("Sorry, o carregamento dos filmes falhou")
-        }
-
-    suspend fun getMovieDetail(movie: Movie): MovieDetail =
-        withContext(Dispatchers.IO) {
-            val response = service.getMovieDetail(id = movie.id).execute()
-
-            if (response.isSuccessful)
-                response.body()!!
-            else throw Exception("Sorry, o carregamento do filme falhou")
+            val movies = localStore.getMovies().map {
+                Movie(
+                    it.id,
+                    it.title,
+                    it.posterPath,
+                    it.adult,
+                    it.overview,
+                    it.releaseDate,
+                    null,
+                    it.originalTitle,
+                    it.originalLanguage,
+                    it.backdropPath,
+                    it.voteCount,
+                    it.video,
+                    it.popularity,
+                    it.voteAverage,
+                    it.favorited
+                )
+            }
+            if (query != null && query.isNotEmpty())
+                movies.filter { it.title.contains(query, true) || it.originalTitle.contains(query, true)  }
+            else movies
         }
 
     @WorkerThread
@@ -75,15 +77,6 @@ class MovieRepository : Repository {
         else localStore.delete(entity.id)
         return movie
     }
-
-    suspend fun getCredits(movie: Movie): Credits =
-        withContext(Dispatchers.IO) {
-            val response = service.getCredits(id = movie.id).execute()
-
-            if (response.isSuccessful)
-                response.body()!!
-            else throw Exception("Sorry, o carregamento dos creditos falhou")
-        }
 
 
 }

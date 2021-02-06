@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">The Movies</string>
+    <string name="hello_say_movie_name">Olá, diga um nome de filme</string>
+</resources>

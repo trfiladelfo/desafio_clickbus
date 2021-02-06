@@ -21,12 +21,11 @@ abstract class MovieDatabase : RoomDatabase() {
          */
         fun getDatabase(context: Context): MovieDatabase =
             (INSTANCE ?: synchronized(this) {
-                INSTANCE = Room.databaseBuilder(
+                Room.databaseBuilder(
                     context.applicationContext,
                     MovieDatabase::class.java,
                     "movie"
-                ).build()
-                INSTANCE
-            })!!
+                ).build().also {  INSTANCE = it }
+            })
     }
 }

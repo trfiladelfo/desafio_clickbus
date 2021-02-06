@@ -38,15 +38,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
-                    android:hint="Procura por título ou gênero"
+                    android:hint="Procura por título"
                     android:lines="1"
                     android:imeOptions="actionSearch"
+                    android:inputType="text"
                     android:backgroundTint="@android:color/transparent"
                     android:textColorHint="@android:color/white"
                     android:textColor="@android:color/white"
                     />
 
                 <ImageView
+                    android:id="@+id/button_voice_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"

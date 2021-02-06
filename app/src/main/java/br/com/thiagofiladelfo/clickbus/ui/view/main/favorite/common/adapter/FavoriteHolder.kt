@@ -1,30 +1,27 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter
+package br.com.thiagofiladelfo.clickbus.ui.view.main.favorite.common.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.share.Constants
-import br.com.thiagofiladelfo.clickbus.share.extension.toDate
-import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.Business
 import com.bumptech.glide.Glide
 import com.shunan.circularprogressbar.CircularProgressBar
 import java.text.DateFormat
 import java.util.*
 
-class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class FavoriteHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     companion object {
         /**
          * Recupera a instancia para uma abrir uma activity
          */
-        fun getInstance(parent: ViewGroup): MovieHolder = MovieHolder(
+        fun getInstance(parent: ViewGroup): FavoriteHolder = FavoriteHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.movie_holder,
+                R.layout.favorite_holder,
                 parent,
                 false
             )
@@ -42,12 +39,6 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
      */
     fun bind(movie: Movie) {
         view.findViewById<TextView>(R.id.textview_title).text = movie.title
-        view.findViewById<TextView>(R.id.textview_context).text = movie.overview
-        view.findViewById<TextView>(R.id.textview_release_date).text =
-            sdf.format(movie.releaseDate.toDate())
-
-
-        Business.rulesFavorited(view.findViewById<ImageButton>(R.id.button_favorite), movie)
 
         val average = movie.voteAverage
         view.findViewById<TextView>(R.id.text_view_average).text =
@@ -92,28 +83,11 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
 
         //eventos
-        if (::onFavoriteListener.isInitialized) {
-            view.findViewById<ImageButton>(R.id.button_favorite).setOnClickListener {
-                movie.favorited = !movie.favorited
-                onFavoriteListener.invoke(movie)
-            }
-        }
-
         if (::onShareListener.isInitialized) {
-            view.findViewById<ImageButton>(R.id.button_share).setOnClickListener {
-                onShareListener.invoke(movie)
-            }
+//            view.findViewById<ImageButton>(R.id.button_share).setOnClickListener {
+//                onShareListener.invoke(movie)
+//            }
         }
-    }
-
-    /**
-     * Implemento do evento do click de favoritar um filme
-     *
-     * @param listener Unit: objeto de referencia para o evento
-     * @return movie Movie: informações do item clicado
-     */
-    fun setOnFavoriteListener(listener: (movie: Movie) -> Unit) {
-        this.onFavoriteListener = listener
     }
 
     /**
