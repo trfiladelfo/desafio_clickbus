@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="br.com.thiagofiladelfo.clickbus.ui.view.main.home.HomeFragment"
-        tools:layout="@layout/home_fragment"
+        android:name="br.com.thiagofiladelfo.clickbus.ui.view.main.movie.MovieFragment"
+        tools:layout="@layout/movie_fragment"
         >
         <action
             android:id="@+id/action_navigation_home_to_homeDetailFragment"
@@ -26,8 +26,8 @@
         android:label="Para Você" />
     <fragment
         android:id="@+id/homeDetailFragment"
-        android:name="br.com.thiagofiladelfo.clickbus.ui.view.main.home.HomeDetailFragment"
-        tools:layout="@layout/home_detail_fragment"
+        android:name="br.com.thiagofiladelfo.clickbus.ui.view.main.movie.MovieDetailFragment"
+        tools:layout="@layout/movie_detail_fragment"
         android:label="Filme" >
         <argument
             android:name="movie"

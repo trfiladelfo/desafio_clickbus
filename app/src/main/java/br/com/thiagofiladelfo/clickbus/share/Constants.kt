@@ -19,12 +19,14 @@ object Constants {
     /**
      * Retorna a url da imagem do filme
      */
-    fun urlImagePosterMovie(movie: Movie): String = "http://image.tmdb.org/t/p/original${movie.posterPath}"
+    fun urlImagePosterMovie(movie: Movie): String =
+        "http://image.tmdb.org/t/p/original${movie.posterPath}"
 
     /**
      * Retorna a url da imagem do filme
      */
-    fun urlImageBackdropMovie(movie: Movie): String = "http://image.tmdb.org/t/p/original${movie.backdropPath}"
+    fun urlImageBackdropMovie(movie: Movie): String =
+        "http://image.tmdb.org/t/p/original${movie.backdropPath}"
 
     /**
      * Retorna a url da imagem do ator
@@ -35,7 +37,8 @@ object Constants {
     /**
      * Retorna a url da página web do filme
      */
-    fun urlMovie(movie: Movie): String = "https://www.themoviedb.org/movie/${movie.id}?language=${systemLanguage}"
+    fun urlMovie(movie: Movie): String =
+        "https://www.themoviedb.org/movie/${movie.id}?language=${systemLanguage}"
 
     object sharePreferences {
 

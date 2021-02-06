@@ -36,8 +36,8 @@ interface MovieDAO {
     suspend fun delete(id: Int)
 
     /**
-    * Remove todos os filmes
-    */
+     * Remove todos os filmes
+     */
     @Query("DELETE FROM movie")
     suspend fun deleteAll()
 }

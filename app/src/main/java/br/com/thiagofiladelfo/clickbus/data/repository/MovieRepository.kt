@@ -12,9 +12,9 @@ import br.com.thiagofiladelfo.clickbus.data.repository.network.Service
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class MovieRepository: Repository {
+class MovieRepository : Repository {
     constructor()
-    constructor(context: Context): super(context)
+    constructor(context: Context) : super(context)
 
     private val service: Service = Resources.tmdbService
     private val localStore by lazy {
@@ -50,19 +50,19 @@ class MovieRepository: Repository {
             if (response.isSuccessful)
                 response.body()
             else throw Exception("Sorry, o carregamento do filme falhou")
-    }
+        }
 
     @WorkerThread
     suspend fun favoriteMovie(movie: Movie): Movie {
 
-            /** Bloco para saber no firebase *
-            val user = Firebase.auth.currentUser
-            val database = Firebase.database.getReference(user!!.email!!.md5())
-            database.keepSynced(true)
+        /** Bloco para saber no firebase *
+        val user = Firebase.auth.currentUser
+        val database = Firebase.database.getReference(user!!.email!!.md5())
+        database.keepSynced(true)
 
-            database.child("favorite").child(movie.id.toString()).setValue(favorited)
-            true
-            */
+        database.child("favorite").child(movie.id.toString()).setValue(favorited)
+        true
+         */
 
 //            context.getSharedPreferences(Constants.sharePreferences.favorite, Context.MODE_PRIVATE).edit().let {
 //                it.putBoolean(movie.id.toString(), favorited)
@@ -70,10 +70,10 @@ class MovieRepository: Repository {
 //                it.commit()
 //            }
 
-            val entity = br.com.thiagofiladelfo.clickbus.data.repository.local.dao.entity.Movie(movie)
-            if (movie.favorited) localStore.insert(entity)
-            else localStore.delete(entity.id)
-            return movie
+        val entity = br.com.thiagofiladelfo.clickbus.data.repository.local.dao.entity.Movie(movie)
+        if (movie.favorited) localStore.insert(entity)
+        else localStore.delete(entity.id)
+        return movie
     }
 
     suspend fun getCredits(movie: Movie): Credits =
@@ -83,7 +83,7 @@ class MovieRepository: Repository {
             if (response.isSuccessful)
                 response.body()
             else throw Exception("Sorry, o carregamento dos creditos falhou")
-    }
+        }
 
 
 }

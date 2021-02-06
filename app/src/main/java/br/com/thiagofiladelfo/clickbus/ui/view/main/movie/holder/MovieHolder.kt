@@ -1,12 +1,10 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.home.holder
+package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.holder
 
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -50,17 +48,26 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
             sdf.format(movie.releaseDate.toDate())
 
         val average = (movie.voteAverage.toFloat() * 10F).toInt()
-        view.findViewById<TextView>(R.id.text_view_average).text = if (average > 0) "${average}%" else "NR"
+        view.findViewById<TextView>(R.id.text_view_average).text =
+            if (average > 0) "${average}%" else "NR"
 
         view.findViewById<ImageButton>(R.id.button_favorite).let {
             when {
                 movie.favorited -> {
                     it.setImageResource(R.drawable.ic_baseline_favorite_24)
-                    it.setColorFilter(ContextCompat.getColor(view.context, android.R.color.holo_red_dark), PorterDuff.Mode.MULTIPLY)
+                    it.setColorFilter(
+                        ContextCompat.getColor(
+                            view.context,
+                            android.R.color.holo_red_dark
+                        ), PorterDuff.Mode.MULTIPLY
+                    )
                 }
                 else -> {
                     it.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                    it.setColorFilter(ContextCompat.getColor(view.context, android.R.color.white), PorterDuff.Mode.MULTIPLY)
+                    it.setColorFilter(
+                        ContextCompat.getColor(view.context, android.R.color.white),
+                        PorterDuff.Mode.MULTIPLY
+                    )
                 }
             }
         }

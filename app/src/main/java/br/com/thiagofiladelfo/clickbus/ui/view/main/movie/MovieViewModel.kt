@@ -1,10 +1,9 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.home
+package br.com.thiagofiladelfo.clickbus.ui.view.main.movie
 
 import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.*
 import br.com.thiagofiladelfo.clickbus.App
-import br.com.thiagofiladelfo.clickbus.data.model.Cast
 import br.com.thiagofiladelfo.clickbus.data.model.Credits
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
@@ -12,15 +11,14 @@ import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
 import br.com.thiagofiladelfo.clickbus.share.Constants
 import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.share.exception.TMException
-import br.com.thiagofiladelfo.clickbus.ui.view.main.MainActivity
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
+class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
 
     class ViewModelFactory(private val repository: MovieRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             repository.context = App.applicationContext
-            return HomeViewModel(repository) as T
+            return MovieViewModel(repository) as T
         }
     }
 
@@ -48,7 +46,7 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
                     data = movies
                 )
 
-            } catch(e:Exception) {
+            } catch (e: Exception) {
                 _movies.value = Emitter.Message(
                     status = Emitter.Status.ERROR,
                     error = TMException(e.message, e)
@@ -68,7 +66,7 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
                     data = detail
                 )
 
-            } catch(e:Exception) {
+            } catch (e: Exception) {
                 _movie.value = Emitter.Message(
                     status = Emitter.Status.ERROR,
                     error = TMException(e.message, e)
@@ -89,14 +87,13 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
                     data = credits
                 )
 
-            } catch(e:Exception) {
+            } catch (e: Exception) {
                 _credits.value = Emitter.Message(
                     status = Emitter.Status.ERROR,
                     error = TMException(e.message, e)
                 )
             }
         }
-
 
 
     /**
@@ -111,13 +108,13 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
                     data = movie
                 )
 
-            } catch(e:Exception) {
+            } catch (e: Exception) {
                 _favorited.value = Emitter.Message(
                     status = Emitter.Status.ERROR,
                     error = TMException(e.message, e)
                 )
             }
-    }
+        }
 
     /**
      * Compartilha os dados do filme
@@ -125,7 +122,10 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
     fun shareMovie(activity: Activity, movie: Movie) {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "Já assistiu a '${movie.title}'? \n ${Constants.urlMovie(movie)}")
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "Já assistiu a '${movie.title}'? \n ${Constants.urlMovie(movie)}"
+            )
             type = "text/plain"
         }
 

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import br.com.thiagofiladelfo.clickbus.data.model.Credential
 import br.com.thiagofiladelfo.clickbus.data.repository.LoginRepository
 import br.com.thiagofiladelfo.clickbus.databinding.LoginActivityBinding
 import br.com.thiagofiladelfo.clickbus.share.Emitter
@@ -33,7 +32,8 @@ class LoginActivity : BaseActivity() {
             setContentView(it.root)
         }
 
-        viewModel = ViewModelProvider(this,
+        viewModel = ViewModelProvider(
+            this,
             LoginViewModel.ViewModelFactory(
                 LoginRepository()
             )

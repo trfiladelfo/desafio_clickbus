@@ -1,11 +1,10 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.home.holder
+package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.holder
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
-import org.json.JSONObject
 
-class MovieAdapter: RecyclerView.Adapter<MovieHolder> () {
+class MovieAdapter : RecyclerView.Adapter<MovieHolder>() {
 
     private val movies: ArrayList<Movie> = arrayListOf()
 

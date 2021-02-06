@@ -20,7 +20,7 @@ data class Movie(
     @SerializedName("video") val video: Boolean,
     @SerializedName("popularity") val popularity: Double,
     @SerializedName("vote_average") val voteAverage: Double,
-    @Expose()  var favorited: Boolean
+    @Expose() var favorited: Boolean
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

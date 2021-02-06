@@ -1,10 +1,10 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.home.holder
+package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.holder
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.thiagofiladelfo.clickbus.data.model.Cast
 
-class CastAdapter: RecyclerView.Adapter<CastHolder> () {
+class CastAdapter : RecyclerView.Adapter<CastHolder>() {
 
     private val casts: ArrayList<Cast> = arrayListOf()
 

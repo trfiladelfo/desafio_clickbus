@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import br.com.thiagofiladelfo.clickbus.data.repository.local.dao.entity.Movie
 import br.com.thiagofiladelfo.clickbus.data.repository.local.dao.MovieDAO
+import br.com.thiagofiladelfo.clickbus.data.repository.local.dao.entity.Movie
 
 @Database(entities = [Movie::class], version = 1, exportSchema = false)
-abstract class MovieDatabase: RoomDatabase() {
+abstract class MovieDatabase : RoomDatabase() {
 
     abstract fun movieDAO(): MovieDAO
 
