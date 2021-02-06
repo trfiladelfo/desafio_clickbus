@@ -8,6 +8,7 @@ import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
 import br.com.thiagofiladelfo.clickbus.data.repository.MovieRepository
 import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.share.exception.TMException
+import br.com.thiagofiladelfo.clickbus.share.exception.TMNetworkingException
 import kotlinx.coroutines.launch
 
 class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
@@ -37,11 +38,17 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
     fun getMovies(page: Int = 1, query: String? = null) =
         viewModelScope.launch {
             try {
-                val movies = repository.getMovies(page, query)
-                _movies.value = Emitter.Message(
-                    status = Emitter.Status.COMPLETE,
-                    data = movies
-                )
+                if (repository.networkAvailable()) {
+                    val movies = repository.getMovies(page, query)
+                    _movies.value = Emitter.Message(
+                        status = Emitter.Status.COMPLETE,
+                        data = movies
+                    )
+                } else
+                    _movies.value = Emitter.Message(
+                        status = Emitter.Status.ERROR,
+                        error = TMNetworkingException()
+                    )
 
             } catch (e: Exception) {
                 _movies.value = Emitter.Message(

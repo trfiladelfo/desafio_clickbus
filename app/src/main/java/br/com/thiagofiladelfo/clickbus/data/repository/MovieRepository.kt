@@ -9,6 +9,8 @@ import br.com.thiagofiladelfo.clickbus.data.model.MovieDetail
 import br.com.thiagofiladelfo.clickbus.data.repository.local.dao.database.MovieDatabase
 import br.com.thiagofiladelfo.clickbus.data.repository.network.Resources
 import br.com.thiagofiladelfo.clickbus.data.repository.network.Service
+import br.com.thiagofiladelfo.clickbus.share.Constants
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -16,11 +18,8 @@ class MovieRepository : Repository {
     constructor()
     constructor(context: Context) : super(context)
 
-    private val service: Service = Resources.tmdbService
-    private val localStore by lazy {
-        val database = MovieDatabase.getDatabase(context)
-        database.movieDAO()
-    }
+    private val service: Service by lazy { Resources.tmdbService }
+    private val localStore by lazy { MovieDatabase.getDatabase(context).movieDAO() }
 
     /**
      * Busca a listagem de filmes
@@ -71,8 +70,11 @@ class MovieRepository : Repository {
 //            }
 
         val entity = br.com.thiagofiladelfo.clickbus.data.repository.local.dao.entity.Movie(movie)
-        if (movie.favorited) localStore.insert(entity)
-        else localStore.delete(entity.id)
+        if (movie.favorited) {
+            Glide.with(context).downloadOnly().load(Constants.urlImagePosterMovie(movie))
+            Glide.with(context).downloadOnly().load(Constants.urlImageBackdropMovie(movie))
+            localStore.insert(entity)
+        } else localStore.delete(entity.id)
         return movie
     }
 

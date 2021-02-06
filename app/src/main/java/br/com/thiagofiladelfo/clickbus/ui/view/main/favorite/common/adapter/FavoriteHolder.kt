@@ -79,6 +79,8 @@ class FavoriteHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         Glide.with(view)
             .load(Constants.urlImagePosterMovie(movie))
+            .placeholder(R.drawable.ic_baseline_cloud_queue_24)
+            .error(R.drawable.not_found_poster)
             .into(view.findViewById(R.id.image_view_thumbnail))
 
 

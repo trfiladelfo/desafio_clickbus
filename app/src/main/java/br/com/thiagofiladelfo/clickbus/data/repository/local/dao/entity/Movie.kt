@@ -16,7 +16,7 @@ data class Movie(
     val overview: String,
 
     @ColumnInfo(name = "release_date")
-    val releaseDate: String,
+    val releaseDate: String?,
 
     @ColumnInfo(name = "original_title")
     val originalTitle: String,

@@ -128,9 +128,10 @@ class FavoriteFragment : BaseFragment() {
     private fun showMovies(movies: List<Movie>) {
         binding.swipeRefreshMovies.isRefreshing = false
         if (movies.isNotEmpty()) {
+            binding.viewflipper.displayedChild = 1
             adapter.add(movies)
             adapter.notifyDataSetChanged()
-        }
+        } else binding.viewflipper.displayedChild = 0
     }
 
     /**
@@ -138,7 +139,11 @@ class FavoriteFragment : BaseFragment() {
      */
     private fun updateFavorited(movie: Movie) {
         adapter.removeItem(movie)
-        adapter.notifyDataSetChanged()
+
+        if (adapter.itemCount > 0) {
+            binding.viewflipper.displayedChild = 1
+            adapter.notifyDataSetChanged()
+        } else binding.viewflipper.displayedChild = 0
     }
     //UI ==============
 

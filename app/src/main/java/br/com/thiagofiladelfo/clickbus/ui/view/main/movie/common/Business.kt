@@ -2,6 +2,8 @@ package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat
@@ -30,12 +32,15 @@ object Business {
                     )
                 }
                 else -> {
+                    //777777
+                    val color = when(imageButton.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                        Configuration.UI_MODE_NIGHT_YES -> Color.WHITE
+                        Configuration.UI_MODE_NIGHT_NO -> Color.GRAY
+                        else -> Color.GRAY
+                    }
+
                     it.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                    it.setColorFilter(
-                        ContextCompat.getColor(
-                            imageButton.context,
-                            android.R.color.white
-                        ), PorterDuff.Mode.MULTIPLY
+                    it.setColorFilter(color, PorterDuff.Mode.MULTIPLY
                     )
                 }
             }
