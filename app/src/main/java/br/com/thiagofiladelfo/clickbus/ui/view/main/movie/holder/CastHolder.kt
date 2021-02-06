@@ -1,20 +1,14 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.home.holder
+package br.com.thiagofiladelfo.clickbus.ui.view.main.movie.holder
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.data.model.Cast
-import br.com.thiagofiladelfo.clickbus.data.model.Movie
 import br.com.thiagofiladelfo.clickbus.share.Constants
-import br.com.thiagofiladelfo.clickbus.share.extension.toDate
 import com.bumptech.glide.Glide
-import com.shunan.circularprogressbar.CircularProgressBar
-import java.text.DateFormat
-import java.util.*
 
 class CastHolder(val view: View) : RecyclerView.ViewHolder(view) {
 

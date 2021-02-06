@@ -48,8 +48,7 @@ data class MovieDetail(
         parcel.readInt(),
         parcel.readString() ?: "",
         parcel.readLong()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)

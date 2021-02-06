@@ -1,7 +1,6 @@
 package br.com.thiagofiladelfo.clickbus.share.extension
 
 import android.annotation.SuppressLint
-import java.lang.IllegalArgumentException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.text.ParseException
@@ -17,7 +16,8 @@ fun String.toDate(): Date? {
         try {
             date = SimpleDateFormat(mask).parse(this)
             break
-        } catch (e: ParseException) {}
+        } catch (e: ParseException) {
+        }
     }
 
     return date

@@ -8,8 +8,8 @@ import android.view.WindowInsetsController
 import android.view.WindowManager
 import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseActivity
-import br.com.thiagofiladelfo.clickbus.ui.view.main.MainActivity
 import br.com.thiagofiladelfo.clickbus.ui.view.login.LoginActivity
+import br.com.thiagofiladelfo.clickbus.ui.view.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -19,7 +19,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class LauncherActivity: BaseActivity(R.layout.launcher_activity) {
+class LauncherActivity : BaseActivity(R.layout.launcher_activity) {
 
     private lateinit var auth: FirebaseAuth
 

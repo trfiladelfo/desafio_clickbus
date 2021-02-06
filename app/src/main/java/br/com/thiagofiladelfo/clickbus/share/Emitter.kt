@@ -9,12 +9,13 @@ object Emitter {
     }
 
     class Message<out T>(
-            val status: Status,
-            val data: T? = null,
-            val error: TMException? = null
+        val status: Status,
+        val data: T? = null,
+        val error: TMException? = null
     ) {
 
-        val success: Boolean = (status != Status.COMPLETE && status != Status.ERROR) && error != null
+        val success: Boolean =
+            (status != Status.COMPLETE && status != Status.ERROR) && error != null
         val finished: Boolean = (status == Status.COMPLETE || status == Status.ERROR)
     }
 }

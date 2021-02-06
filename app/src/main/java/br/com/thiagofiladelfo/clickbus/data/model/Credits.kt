@@ -4,15 +4,14 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-data class Credits (
+data class Credits(
     @SerializedName("id") val id: Int,
     @SerializedName("cast") val cast: List<Cast>
-    ) : Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.createTypedArrayList(Cast) ?: arrayListOf()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)

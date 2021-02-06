@@ -20,7 +20,7 @@ data class Movie(
     @SerializedName("video") val video: Boolean,
     @SerializedName("popularity") val popularity: Double,
     @SerializedName("vote_average") val voteAverage: Double,
-    @Expose()  val favorite: Boolean
+    @Expose() var favorited: Boolean
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -54,7 +54,7 @@ data class Movie(
         parcel.writeByte(if (video) 1 else 0)
         parcel.writeDouble(popularity)
         parcel.writeDouble(voteAverage)
-        parcel.writeBoolean(favorite)
+        parcel.writeBoolean(favorited)
     }
 
     override fun describeContents(): Int = 0

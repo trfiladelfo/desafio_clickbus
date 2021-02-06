@@ -18,9 +18,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CompletableDeferred
 
-class LoginRepository: Repository {
+class LoginRepository : Repository {
     constructor()
-    constructor(context: Context): super(context)
+    constructor(context: Context) : super(context)
 
     companion object {
         private const val RC_SIGN_IN = 9001

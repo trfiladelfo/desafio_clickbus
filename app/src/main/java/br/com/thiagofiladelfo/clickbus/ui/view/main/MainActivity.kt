@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -13,10 +12,11 @@ import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.databinding.MainActivityBinding
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseActivity
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class MainActivity: BaseActivity() {
+class MainActivity : BaseActivity() {
 
     companion object {
         /**
@@ -47,7 +47,7 @@ class MainActivity: BaseActivity() {
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.homeDetailFragment) {
+            if (destination.id == R.id.homeDetailFragment) {
                 binding.containerSearchMove.visibility = View.GONE
             } else {
                 binding.containerSearchMove.visibility = View.VISIBLE
