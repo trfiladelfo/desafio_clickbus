@@ -33,7 +33,10 @@ Para a execução deste desafio técnico escolhi utilizar algumas abordagens mai
 
 Também me desafiei para tentar colocar o máximo possivel de animação e pensar bastante em usabilidade, mais especificamente na inclusão de acessibilidade (estou bastante engajado nesta causa) e internacionalização do aplicativo.
 
-O aplicativo tem suporte a DarkMode :)
+Durante o desenvolvimento tive uma triste escolha, entre desenvolver com o conceito com TDD, ou realmente entregar um aplicativo minimamente que funciona :(, por sinal acho que já entendeu qual foi a opção escolhida, então fiquei com a segunda :). O motivo que mais pesou nesta decisão foi por também estar fazendo o design do aplicativo e querendo incluir outras características que citei acima que acho interessante ter essa preocupação.
+
+Em suma esse desafio encarei como um hackton individual cujo o objetivo final da jornada ter insumo para apresentar e validar os conceitos utilizados. 
+
  
 ## Como executar?
 - Pré-requisito:
