@@ -23,10 +23,9 @@ class MovieRepository : Repository {
 
     /**
      * Busca a listagem de filmes
-     * @param genders = Códigos dos generos - Opcional
+     * @param query = fragmento de um titulo de filme para ser buscado
      * @param page = Posição de página - Obrigatório, valor padrão 1 (um)
      */
-
     suspend fun getMovies(page: Int = 1, query: String? = null): List<Movie> =
         withContext(Dispatchers.IO) {
             val response = (when {
@@ -42,6 +41,10 @@ class MovieRepository : Repository {
             } else throw Exception("Sorry, o carregamento dos filmes falhou")
         }
 
+    /**
+     * Busca os dados detalhados de um filme
+     * @param movie - filme para ser pesquisado
+     */
     suspend fun getMovieDetail(movie: Movie): MovieDetail =
         withContext(Dispatchers.IO) {
             val response = service.getMovieDetail(id = movie.id).execute()
@@ -51,6 +54,10 @@ class MovieRepository : Repository {
             else throw Exception("Sorry, o carregamento do filme falhou")
         }
 
+    /**
+     * Marca ou desmarca um filme como favorito
+     * @param movie - filme para ser favoritado
+     */
     @WorkerThread
     suspend fun favoriteMovie(movie: Movie): Movie {
 
@@ -78,6 +85,10 @@ class MovieRepository : Repository {
         return movie
     }
 
+    /**
+     * Busca os dados de créditos de um filme
+     * @param movie - filme para ser pesquisado
+     */
     suspend fun getCredits(movie: Movie): Credits =
         withContext(Dispatchers.IO) {
             val response = service.getCredits(id = movie.id).execute()

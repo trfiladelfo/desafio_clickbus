@@ -7,9 +7,15 @@ import androidx.room.RoomDatabase
 import br.com.thiagofiladelfo.clickbus.data.repository.local.dao.MovieDAO
 import br.com.thiagofiladelfo.clickbus.data.repository.local.dao.entity.Movie
 
+/**
+ * Manipulador das tabelas do aplicativo para inserção de dados locais
+ */
 @Database(entities = [Movie::class], version = 1, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
 
+    /**
+     * Referência para acesso aos dados armazenados no banco de dados local
+     */
     abstract fun movieDAO(): MovieDAO
 
     companion object {

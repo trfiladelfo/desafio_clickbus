@@ -4,6 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Classe representativa do json do detalhe de um filme
+ */
 data class MovieDetail(
     @SerializedName("id") val id: Int,
     @SerializedName("adult") val adult: Boolean,

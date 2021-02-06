@@ -23,13 +23,16 @@ import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter.MovieAd
 import com.facebook.shimmer.Shimmer
 import com.google.android.material.snackbar.Snackbar
 
+/**
+ * Fragmento responsável por exibir a listagem dos filmes
+ * Está sendo exibido os mais populares
+ */
 class MovieFragment : BaseFragment() {
 
     private var _binding: MovieFragmentBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModel: MovieViewModel
-
     private val adapter = MovieAdapter()
 
     private var page = 1
@@ -185,6 +188,9 @@ class MovieFragment : BaseFragment() {
             adapter.notifyItemChanged(index)
     }
 
+    /**
+     * Tratamento visual para quando ocorrer um erro
+     */
     private fun errorHandler(error: TMException) {
         when(error) {
             is TMNetworkingException -> binding.viewflipper.displayedChild = 2

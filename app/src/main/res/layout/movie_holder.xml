@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:elevation="10dp"
-                android:text="NR"
+                android:text="@string/nr"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:alpha="1"
-                android:text="Lançamento: "
+                android:text="@string/release"
                 android:textSize="12sp" />
 
             <TextView
@@ -134,6 +134,7 @@
                     android:layout_margin="2dp"
                     android:background="?android:selectableItemBackground"
                     android:padding="8dp"
+                    android:contentDescription="@string/content_description_button_favorite"
                     android:src="@drawable/ic_baseline_favorite_border_24" />
 
                 <ImageButton
@@ -143,6 +144,7 @@
                     android:layout_margin="2dp"
                     android:background="?android:selectableItemBackground"
                     android:padding="8dp"
+                    android:contentDescription="@string/content_description_button_share"
                     android:src="@drawable/ic_baseline_share_24" />
 
             </LinearLayout>

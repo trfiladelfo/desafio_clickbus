@@ -4,6 +4,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.thiagofiladelfo.clickbus.data.model.Movie
 
+/**
+ * Manipulador da listagem de filme
+ */
 class MovieAdapter : RecyclerView.Adapter<MovieHolder>() {
 
     private val movies: ArrayList<Movie> = arrayListOf()

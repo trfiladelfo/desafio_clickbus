@@ -22,6 +22,9 @@ import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.common.adapter.Section
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 
+/**
+ * Fragmento responsável por exibir os dados detalhado do filme
+ */
 class MovieDetailFragment : BaseFragment() {
     private val args: MovieDetailFragmentArgs by navArgs()
 
@@ -32,7 +35,8 @@ class MovieDetailFragment : BaseFragment() {
         factoryProducer = { MovieViewModel.ViewModelFactory(MovieRepository()) }
     )
 
-    private val adapter: SectionsPagerAdapter by lazy { SectionsPagerAdapter(childFragmentManager) }
+    //Adapter para montar as abas (sessões)
+    private val adapter: SectionsPagerAdapter by lazy { SectionsPagerAdapter(requireContext(), childFragmentManager) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

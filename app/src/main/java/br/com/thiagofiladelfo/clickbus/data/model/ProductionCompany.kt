@@ -4,6 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Classe representativa do json das produtoras filme
+ */
 data class ProductionCompany(
     @SerializedName("id") val id: Int,
     @SerializedName("logo_path") val logoPath: String,

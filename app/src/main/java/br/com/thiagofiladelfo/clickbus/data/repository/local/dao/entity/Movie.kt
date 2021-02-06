@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Entidade que representa a tabela de filmes no banco de dados local
+ */
 @Entity(tableName = "movie")
 data class Movie(
     @PrimaryKey

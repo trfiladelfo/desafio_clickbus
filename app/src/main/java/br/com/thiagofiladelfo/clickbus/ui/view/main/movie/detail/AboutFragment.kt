@@ -9,12 +9,15 @@ import br.com.thiagofiladelfo.clickbus.databinding.AboutMovieDetailFragmentBindi
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseFragment
 import java.text.NumberFormat
 
+/**
+ * Fragmento responsável pela exibição da aba de Sobre do detalhamento de um filme
+ */
 class AboutFragment : BaseFragment() {
 
     private var _binding: AboutMovieDetailFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val currencyFormat = NumberFormat.getCurrencyInstance()
+    private val currencyFormat = NumberFormat.getCurrencyInstance()  //formatador da moeda
 
     override fun onCreateView(
         inflater: LayoutInflater,

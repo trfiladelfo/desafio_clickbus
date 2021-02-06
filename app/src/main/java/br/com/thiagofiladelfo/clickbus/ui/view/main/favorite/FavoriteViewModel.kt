@@ -9,6 +9,9 @@ import br.com.thiagofiladelfo.clickbus.share.Emitter
 import br.com.thiagofiladelfo.clickbus.share.exception.TMException
 import kotlinx.coroutines.launch
 
+/**
+ * Classe de manipulação das informações dos filmes favoritados
+ */
 class FavoriteViewModel(private val repository: FavoriteRepository) : ViewModel() {
 
     class ViewModelFactory(private val repository: FavoriteRepository) : ViewModelProvider.Factory {
@@ -53,10 +56,9 @@ class FavoriteViewModel(private val repository: FavoriteRepository) : ViewModel(
     fun favoriteMovie(movie: Movie) =
         viewModelScope.launch {
             try {
-                val movie = repository.favoriteMovie(movie)
                 _favorited.value = Emitter.Message(
                     status = Emitter.Status.COMPLETE,
-                    data = movie
+                    data = repository.favoriteMovie(movie)
                 )
 
             } catch (e: Exception) {

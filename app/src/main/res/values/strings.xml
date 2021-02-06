@@ -1,4 +1,30 @@
 <resources>
     <string name="app_name" translatable="false">The Movies</string>
     <string name="hello_say_movie_name">Hello, say a movie name</string>
+    <string name="budget">Budget: </string>
+    <string name="revenue">Revenue: </string>
+    <string name="content_description_cast_profile">Profile image of the author who participated in this film</string>
+    <string name="content_description_image_backdrop">Movie promotional banner</string>
+    <string name="content_description_image_poster">Promotional cover of the film</string>
+    <string name="content_description_button_share">Button for sharing the movie</string>
+    <string name="content_description_button_favorite">Button for favorite the movie</string>
+    <string name="content_description_image_alert">Image alert</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="message_alert_empty_favorite">Oops, você não favoritou nenhum filme</string>
+    <string name="nr">NR</string>
+    <string name="content_description_image_logotipo">Application logo</string>
+    <string name="application_subtitle">It has all the movies you can imagine</string>
+    <string name="term_of_use">Terms of Use and Privacy Policy</string>
+    <string name="login_with_google">Login with Google</string>
+    <string name="title_search">Title search</string>
+    <string name="content_description_button_voice_search">Voice search button</string>
+    <string name="content_description_image_avatar">User profile image</string>
+    <string name="try_again">Try again?</string>
+    <string name="movie_not_found">Oops, in my movie collection I didn\'t find anything I was looking for. Shall we try to find another movie?</string>
+    <string name="error_internet_communication">We\'re unable to establish communication, check your communication with the Internet </string>
+    <string name="release">Release: </string>
+    <string name="popular">Popular</string>
+    <string name="cast">Cast</string>
+    <string name="about">About</string>
+    <string name="favorites">Favorites</string>
 </resources>

@@ -14,6 +14,10 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * Responsável por manipular os dados dos filmes favorito.
+ * Essa classe tem a função de concentrar todas as regras de négocio (ponto único da informação)
+ */
 class FavoriteRepository : Repository {
     constructor()
     constructor(context: Context) : super(context)
@@ -54,24 +58,13 @@ class FavoriteRepository : Repository {
             else movies
         }
 
+
+    /**
+     * Marca ou desmarca um filme como favorito
+     * @param movie - filme para ser favoritado
+     */
     @WorkerThread
     suspend fun favoriteMovie(movie: Movie): Movie {
-
-        /** Bloco para saber no firebase *
-        val user = Firebase.auth.currentUser
-        val database = Firebase.database.getReference(user!!.email!!.md5())
-        database.keepSynced(true)
-
-        database.child("favorite").child(movie.id.toString()).setValue(favorited)
-        true
-         */
-
-//            context.getSharedPreferences(Constants.sharePreferences.favorite, Context.MODE_PRIVATE).edit().let {
-//                it.putBoolean(movie.id.toString(), favorited)
-//                it.apply()
-//                it.commit()
-//            }
-
         val entity = br.com.thiagofiladelfo.clickbus.data.repository.local.dao.entity.Movie(movie)
         if (movie.favorited) localStore.insert(entity)
         else localStore.delete(entity.id)

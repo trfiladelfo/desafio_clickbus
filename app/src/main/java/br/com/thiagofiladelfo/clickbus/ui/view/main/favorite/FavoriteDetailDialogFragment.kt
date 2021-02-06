@@ -1,5 +1,6 @@
 package br.com.thiagofiladelfo.clickbus.ui.view.main.favorite
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -51,6 +52,7 @@ class FavoriteDetailDialogFragment : DialogFragment() {
     /**
      * Inicializa a interface
      */
+
     private fun setInitializeComponentes(movie: Movie) {
         Glide.with(binding.root)
             .load(Constants.urlImageBackdropMovie(movie))
@@ -67,11 +69,10 @@ class FavoriteDetailDialogFragment : DialogFragment() {
         binding.textviewTitle.text = movie.title
         binding.textviewContext.text = movie.overview
 
+        @SuppressLint("SimpleDateFormat")
         binding.textviewDate.text = movie.releaseDate?.let {
             try { SimpleDateFormat("MMM yyyy").format(it.toDate ()) } catch (e:Throwable) { "" }
         }
-
-        updateFavorited(movie)
 
         binding.buttonShare.setOnClickListener { Business.shareMovie(requireActivity(), movie) }
     }
@@ -80,12 +81,6 @@ class FavoriteDetailDialogFragment : DialogFragment() {
 
 
     //UI ==============
-    /**
-     * Atualiza informação do filme para sinalizar que favoritou um não
-     */
-    private fun updateFavorited(movie: Movie) {
-        //Business.rulesFavorited(binding.buttonFavorite, movie)
-    }
     //UI ==============
 
     companion object {

@@ -21,12 +21,17 @@ import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
 
+/**
+ * Responsável por exibir o item da listagem do filme
+ * @param view - classe de visualização representativa da célula
+ */
 class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     //Listeners
     private lateinit var onFavoriteListener: (movie: Movie) -> Unit
     private lateinit var onShareListener: (movie: Movie) -> Unit
 
+    // formatador de data
     private val sdf: DateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault())
 
     /**
@@ -137,7 +142,7 @@ class MovieHolder(val view: View) : RecyclerView.ViewHolder(view) {
                         false
                     )
                 ).also {
-                    Timber.tag("MovieHolder")
+                    Timber.tag("MovieHolder")       //Utilizado para fazer o debug
                 }
             }
     }

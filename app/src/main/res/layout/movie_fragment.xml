@@ -118,16 +118,15 @@
                     android:textAlignment="center"
                     android:textSize="22sp"
                     android:layout_margin="15dp"
-                    android:text="Oops, no meu acervo de filmes não encontrei nada do que estava procurando. Vamos tentar buscar outro filme?"
+                    android:text="@string/movie_not_found"
                     />
-
 
                 <Button
                     android:id="@+id/button_try_again_search"
                     android:layout_width="wrap_content"
                     android:layout_height="62dp"
                     android:layout_gravity="center"
-                    android:text="Vamos tentar novamente?"
+                    android:text="@string/try_again"
                     />
 
             </LinearLayout>
@@ -160,7 +159,7 @@
                     android:textAlignment="center"
                     android:textSize="22sp"
                     android:layout_margin="15dp"
-                    android:text="Não estamos conseguindo estabelecer comunicação, verifique sua comunicação com a Internet"
+                    android:text="@string/error_internet_communication"
                     />
 
 
@@ -169,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="62dp"
                     android:layout_gravity="center"
-                    android:text="Vamos tentar novamente?"
+                    android:text="@string/try_again"
                     />
 
             </LinearLayout>

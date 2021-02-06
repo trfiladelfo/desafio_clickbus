@@ -11,6 +11,7 @@
         android:layout_margin="8dp"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/content_description_cast_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

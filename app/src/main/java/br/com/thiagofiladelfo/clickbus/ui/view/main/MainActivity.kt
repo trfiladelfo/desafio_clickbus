@@ -31,7 +31,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
-
+/**
+ * Classe de manipulação do desembarque do usuário na aplicação
+ */
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: MainActivityBinding  //ViewBinding
@@ -69,6 +71,7 @@ class MainActivity : BaseActivity() {
 
         Glide.with(binding.root)
             .load(user!!.photoUrl)
+            .error(R.drawable.ic_baseline_face_24)
             .circleCrop()
             .into(binding.imageviewProfile)
 
@@ -93,15 +96,6 @@ class MainActivity : BaseActivity() {
 
         }
 
-    }
-
-    private fun searchMovie(query: String) {
-        val navHostFragment: NavHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        when (val currentFragment = navHostFragment.childFragmentManager.fragments[0]) {
-            is MovieFragment -> currentFragment.searchMovie(query)
-            is FavoriteFragment -> currentFragment.searchMovie(query)
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -134,6 +128,9 @@ class MainActivity : BaseActivity() {
     override fun onSupportNavigateUp(): Boolean =
         findNavController(R.id.nav_host_fragment).navigateUp() || super.onSupportNavigateUp()
 
+    /**
+     * Valida as permissões necessárias para busca por voz
+     */
     private fun checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             ActivityCompat.requestPermissions(
@@ -143,6 +140,9 @@ class MainActivity : BaseActivity() {
             )
     }
 
+    /**
+     * Manipulador para realizar a captura da voz
+     */
     private fun listenerUser() {
         SpeechRecognizer.createSpeechRecognizer(this)
         try {
@@ -165,10 +165,22 @@ class MainActivity : BaseActivity() {
 
     }
 
+    /**
+     * Busca a lista de filmes baseada em um fragmento do titulo
+     */
+    private fun searchMovie(query: String) {
+        val navHostFragment: NavHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        when (val currentFragment = navHostFragment.childFragmentManager.fragments[0]) {
+            is MovieFragment -> currentFragment.searchMovie(query)
+            is FavoriteFragment -> currentFragment.searchMovie(query)
+        }
+    }
+
     companion object {
 
-        val AuthorizeRecordAudioRequestCode = 777
-        val ListenerRecordAudioRequestCode = 555
+        const val AuthorizeRecordAudioRequestCode = 777
+        const val ListenerRecordAudioRequestCode = 555
 
         /**
          * Recupera a instancia para uma abrir uma activity

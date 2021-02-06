@@ -18,6 +18,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CompletableDeferred
 
+/**
+ * Responsável por manipular os dados do usuário da aplicação.
+ * Essa classe tem a função de concentrar todas as regras de négocio (ponto único da informação)
+ */
 class LoginRepository : Repository {
     constructor()
     constructor(context: Context) : super(context)
@@ -28,6 +32,10 @@ class LoginRepository : Repository {
 
     private var auth: FirebaseAuth = Firebase.auth
 
+    /**
+     * Realiza o ingresso do usuário na aplicação via Google Autheticator
+     * @param activity - referencia da atividade que está sendo a chamadora
+     */
     @WorkerThread
     suspend fun signIn(activity: Activity) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -39,6 +47,11 @@ class LoginRepository : Repository {
         activity.startActivityForResult(googleSignInClient.signInIntent, RC_SIGN_IN)
     }
 
+    /**
+     * Valida o ingresso na plataforma Google
+     * @param requestCode - referencia do código de requisição
+     * @param data - dados adicional oriundo do handshake no Google
+     */
     @WorkerThread
     suspend fun signedIn(requestCode: Int, data: Intent?): String? {
         if (requestCode == RC_SIGN_IN) {
@@ -49,6 +62,11 @@ class LoginRepository : Repository {
         }
     }
 
+    /**
+     * Finaliza a validação das informações coletadas durante o handshake no Google
+     * @param activity - referencia da atividade que está sendo a chamadora
+     * @param idToken - identificador do processamento realizado
+     */
     @WorkerThread
     suspend fun getCredential(activity: Activity, idToken: String): Credential {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
