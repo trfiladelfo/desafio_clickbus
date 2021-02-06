@@ -1,4 +1,4 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.movie
+package br.com.thiagofiladelfo.clickbus.ui.view.main.favorite
 
 import android.app.Activity
 import android.content.Intent

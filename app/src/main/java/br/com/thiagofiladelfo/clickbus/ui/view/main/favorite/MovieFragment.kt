@@ -1,4 +1,4 @@
-package br.com.thiagofiladelfo.clickbus.ui.view.main.movie
+package br.com.thiagofiladelfo.clickbus.ui.view.main.favorite
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -28,8 +28,8 @@ class MovieFragment : BaseFragment() {
 
     private val adapter = MovieAdapter()
 
+    private val filterGenders: ArrayList<Int> = arrayListOf()
     private var page = 1
-    private var query: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,14 +63,6 @@ class MovieFragment : BaseFragment() {
 
     ////// CODIFICACAO
 
-    fun searchMovie(query: String) {
-        this.query = if (query.isNotEmpty())
-           query else null
-
-        page = 1
-        fetchMovies(page, query)
-    }
-
     // Inicializadores ==============
     /**
      * Inicializa a interface
@@ -93,7 +85,7 @@ class MovieFragment : BaseFragment() {
                     val firstVisibleItemPosition = manager.findFirstVisibleItemPosition()
 
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                        fetchMovies(++page, query)
+                        //fetchMovies(filterGenders.toTypedArray(), ++page)
                     }
                 }
             }
@@ -102,7 +94,7 @@ class MovieFragment : BaseFragment() {
         //Swipe Refresh
         binding.swipeRefreshMovies.setOnRefreshListener {
             page = 1
-            fetchMovies(page, query)
+//            fetchMovies(filterGenders.toTypedArray(), page)
         }
     }
 
@@ -189,5 +181,6 @@ class MovieFragment : BaseFragment() {
             bundleOf("movie" to movie)
         )
     }
+
 
 }

@@ -4,17 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.thiagofiladelfo.clickbus.R
 import br.com.thiagofiladelfo.clickbus.databinding.MainActivityBinding
 import br.com.thiagofiladelfo.clickbus.ui.base.BaseActivity
+import br.com.thiagofiladelfo.clickbus.ui.view.main.movie.MovieFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+
 
 class MainActivity : BaseActivity() {
 
@@ -47,11 +52,7 @@ class MainActivity : BaseActivity() {
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.homeDetailFragment) {
-                binding.containerSearchMove.visibility = View.GONE
-            } else {
-                binding.containerSearchMove.visibility = View.VISIBLE
-            }
+                binding.containerSearchMove.visibility = if (destination.id == R.id.homeDetailFragment) View.GONE else View.VISIBLE
         }
 
         val appBarConfiguration = AppBarConfiguration(
@@ -67,6 +68,20 @@ class MainActivity : BaseActivity() {
             .load(user!!.photoUrl)
             .circleCrop()
             .into(binding.imageviewProfile)
+
+        binding.edittextSearch.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    val navHostFragment: NavHostFragment? =
+                        supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
+                    val currentFragment = navHostFragment!!.childFragmentManager.fragments[0]
+                    (currentFragment as MovieFragment).searchMovie(binding.edittextSearch.text.toString())
+                    return@OnEditorActionListener true
+                }
+                else -> false
+            }
+        })
+
     }
 
     override fun onSupportNavigateUp(): Boolean =

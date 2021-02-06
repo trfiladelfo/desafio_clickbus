@@ -19,15 +19,27 @@ interface Service {
      * Busca todos os filmes poupares
      * @param apiKey = Chave de conexão com o servidor - Opcional
      * @param language = Regionalização do conteúdo - Opcional
-     * @param genres = Filtro para vários generos - Opcional
-     * @param page = Posição de página - Obrigatório, valor padrão 1 (um)
+     * @param page = Posição de página - Obrigatório, valor padrão 1 (um) e no máximo 1000
      */
     @GET("discover/movie?sort_by=popularity.desc")
     fun getPopularMovies(
         @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
         @Query("language") language: String = Constants.systemLanguage,
-        @Query("with_genres") genres: String = "",
         @Query("page") page: Int = 0,
+    ): Call<MoviesResult>
+
+    /**
+     * Busca todos os filmes com o titulo que contém as palavras informadas
+     * @param apiKey = Chave de conexão com o servidor - Opcional
+     * @param language = Regionalização do conteúdo - Opcional
+     * @param page = Posição de página - Obrigatório, valor padrão 1 (um) e no máximo 1000
+     */
+    @GET("search/movie")
+    fun getMoviesByQuery(
+        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
+        @Query("language") language: String = Constants.systemLanguage,
+        @Query("page") page: Int = 0,
+        @Query("query") query: String
     ): Call<MoviesResult>
 
     /**

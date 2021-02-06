@@ -28,12 +28,12 @@ class MovieRepository : Repository {
      * @param page = Posição de página - Obrigatório, valor padrão 1 (um)
      */
 
-    suspend fun getMovies(genders: Array<Int> = emptyArray(), page: Int = 1): List<Movie> =
+    suspend fun getMovies(page: Int = 1, query: String? = null): List<Movie> =
         withContext(Dispatchers.IO) {
-            val response = service.getPopularMovies(
-                genres = genders.joinToString(separator = ",") { "$it" },
-                page = page
-            ).execute()
+            val response = (when {
+                query == null || query.isEmpty() -> service.getPopularMovies(page = page)
+                else -> service.getMoviesByQuery(page = page, query=query)
+            }).execute()
 
             if (response.isSuccessful) {
                 val favorited = localStore.getMovies().associate { it.id to it.favorited }
