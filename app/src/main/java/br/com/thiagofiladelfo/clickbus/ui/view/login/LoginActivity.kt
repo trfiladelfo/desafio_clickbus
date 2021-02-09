@@ -64,7 +64,8 @@ class LoginActivity : BaseActivity() {
      * Método para responder a ação do botão de login
      */
     private fun signInAction() {
-        viewModel.signIn(this)
+        //viewModel.signIn(this) -> por conta do google auth
+        moveHomeAction()
     }
 
     /**
