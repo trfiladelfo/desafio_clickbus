@@ -68,12 +68,12 @@ class MainActivity : BaseActivity() {
         navView.setupWithNavController(navController)
 
         val user = Firebase.auth.currentUser
-
-        Glide.with(binding.root)
-            .load(user!!.photoUrl)
-            .error(R.drawable.ic_baseline_face_24)
-            .circleCrop()
-            .into(binding.imageviewProfile)
+        if (user != null)
+            Glide.with(binding.root)
+                .load(user.photoUrl)
+                .error(R.drawable.ic_baseline_face_24)
+                .circleCrop()
+                .into(binding.imageviewProfile)
 
         binding.edittextSearch.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
             when (actionId) {

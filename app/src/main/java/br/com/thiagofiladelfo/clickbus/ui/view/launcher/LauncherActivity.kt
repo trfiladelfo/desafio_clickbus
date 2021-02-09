@@ -54,7 +54,7 @@ class LauncherActivity : BaseActivity(R.layout.launcher_activity) {
         super.onPostCreate(savedInstanceState)
 
         //Seleção de tela quando o usuario for ou não logado
-        val screen = if (auth.currentUser != null)
+        val screen = if (true) //if (auth.currentUser != null)
             MainActivity.getInstance(this@LauncherActivity)
         else
             LoginActivity.getInstance(this@LauncherActivity)
