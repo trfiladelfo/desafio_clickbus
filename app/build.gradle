@@ -11,6 +11,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+    lintOptions {
+        abortOnError false
+    }
+
     //TODO Para lembrar as cred de compilacao
     signingConfigs {
         release {
