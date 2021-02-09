@@ -40,7 +40,7 @@ data class Movie(
         parcel.readByte() != 0.toByte(),
         parcel.readDouble(),
         parcel.readDouble(),
-        parcel.readBoolean()
+        parcel.readInt() != 0
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -57,7 +57,7 @@ data class Movie(
         parcel.writeByte(if (video) 1 else 0)
         parcel.writeDouble(popularity)
         parcel.writeDouble(voteAverage)
-        parcel.writeBoolean(favorited)
+        parcel.writeInt(if (favorited) 1 else 0)
     }
 
     override fun describeContents(): Int = 0

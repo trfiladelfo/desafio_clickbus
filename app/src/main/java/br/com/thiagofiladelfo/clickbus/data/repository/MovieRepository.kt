@@ -36,7 +36,7 @@ class MovieRepository : Repository {
             if (response.isSuccessful) {
                 val favorited = localStore.getMovies().associate { it.id to it.favorited }
                 response.body()!!.results.onEach {
-                    it.favorited = favorited.getOrDefault(it.id, false)
+                    it.favorited = favorited.get(it.id) ?: false
                 }
             } else throw Exception("Sorry, o carregamento dos filmes falhou")
         }
@@ -61,7 +61,7 @@ class MovieRepository : Repository {
     @WorkerThread
     suspend fun favoriteMovie(movie: Movie): Movie {
 
-        /** Bloco para saber no firebase *
+        /** Bloco para salvar no firebase *
         val user = Firebase.auth.currentUser
         val database = Firebase.database.getReference(user!!.email!!.md5())
         database.keepSynced(true)
